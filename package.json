@@ -1,0 +1,26 @@
+{
+  "name": "app-starter",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.3.0",
+    "@tailwindcss/forms": "^0.3.4",
+    "@tailwindcss/typography": "^0.4.1",
+    "alpinejs": "^3.5.2",
+    "dotenv": "^10.0.0",
+    "naja": "^2.2.1",
+    "postcss": "^8.3.11",
+    "tailwindcss": "^2.2.19"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^1.6.1",
+    "autoprefixer": "^10.4.0",
+    "core-js": "^3.19.1",
+    "postcss-loader": "^6.2.0",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.2",
+    "webpack-notifier": "^1.14.1"
+  }
+}

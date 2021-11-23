@@ -1,0 +1,90 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace App\UI\Control\Datagrid\Action;
+
+use App\Doctrine\IEntity;
+use App\UI\Control\Datagrid\FrontDatagrid;
+use App\UI\Tailwind\TailwindColorConstant;
+
+class DatagridAction implements IDatagridAction
+{
+
+	private const TEMPLATE_FILE = __DIR__ . '/templates/datagridAction.latte';
+
+	/**
+	 * @param array<DatagridActionParameter> $parameters
+	 */
+	public function __construct(
+		private FrontDatagrid $datagrid,
+		private string $id,
+		private string $label,
+		private string $destination,
+		private array $parameters,
+		private string|null $icon = null,
+		private string $color = TailwindColorConstant::BLUE,
+	)
+	{
+	}
+
+	public function getId(): string
+	{
+		return $this->id;
+	}
+
+	public function getLabel(): string
+	{
+		return $this->label;
+	}
+
+	public function getIcon(): string|null
+	{
+		return $this->icon;
+	}
+
+	public function getDestination(): string
+	{
+		return $this->destination;
+	}
+
+	/**
+	 * @return array<DatagridActionParameter>
+	 */
+	public function getParameters(): array
+	{
+		return $this->parameters;
+	}
+
+	public function getColor(): string
+	{
+		return $this->color;
+	}
+
+	public function getTemplateFile(): string
+	{
+		return self::TEMPLATE_FILE;
+	}
+
+	public function getDatagrid(): FrontDatagrid
+	{
+		return $this->datagrid;
+	}
+
+	/**
+	 * @return array<string, mixed>
+	 */
+	public function formatParametersForAction(IEntity $row): array
+	{
+		$formatedParameters = [];
+		foreach ($this->parameters as $parameter) {
+			$formatedParameters[$parameter->getParameter()] = $this->datagrid->getDatasource()->getValueForKey(
+				$parameter->getReferencedColumn(),
+				$row,
+			);
+		}
+
+		return $formatedParameters;
+	}
+
+}
