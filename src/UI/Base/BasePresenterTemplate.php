@@ -5,13 +5,10 @@ declare(strict_types = 1);
 namespace App\UI\Base;
 
 use Nette\Bridges\ApplicationLatte\Template;
-use Nette\Security\User;
 use stdClass;
 
-class BasePresenterTemplate extends Template
+abstract class BasePresenterTemplate extends Template
 {
-
-	public User $user;
 
 	public string $baseUrl;
 
@@ -19,5 +16,7 @@ class BasePresenterTemplate extends Template
 
 	/** @var array<stdClass> */
 	public array $flashes;
+
+	public bool $includeBody;
 
 }

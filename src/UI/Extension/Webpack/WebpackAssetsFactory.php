@@ -104,8 +104,6 @@ class WebpackAssetsFactory
 				throw new WebpackException('Missing entrypoints');
 			}
 
-
-
 			foreach ($decodedContents['entrypoints'] as $entryPointName => $contents) {
 				if (array_key_exists($entryPointName, $this->loadedAssets)) {
 					throw new WebpackException(

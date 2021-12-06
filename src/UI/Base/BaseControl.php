@@ -6,7 +6,7 @@ namespace App\UI\Base;
 
 use Nette\Application\UI\Control;
 
-class BaseControl extends Control
+abstract class BaseControl extends Control
 {
 
 }

@@ -16,7 +16,7 @@ class DatetimeFormatFilter
 			return DatetimeConst::DEFAULT_NULL_DATETIME_PLACEHOLDER;
 		}
 
-		return $datetime->format(DatetimeConst::DEPARTURE_TABLE_DATETIME_FORMAT);
+		return $datetime->format(DatetimeConst::SYSTEM_DATETIME_FORMAT);
 	}
 
 }

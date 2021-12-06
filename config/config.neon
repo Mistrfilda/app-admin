@@ -21,8 +21,7 @@ extensions:
 	orm.console: Nettrine\ORM\DI\OrmConsoleExtension
 	orm.cache: Nettrine\Cache\DI\CacheExtension
 	migrations: Nettrine\Migrations\DI\MigrationsExtension
-	nettrine.annotations: Nettrine\Annotations\DI\AnnotationsExtension
-	orm.annotations: Nettrine\ORM\DI\OrmAnnotationsExtension
+	orm.attributes: Nettrine\ORM\DI\OrmAttributesExtension
 	monolog: Contributte\Monolog\DI\MonologExtension
 
 	webpackassets: App\UI\Extension\Webpack\DI\WebpackAssetExtension
@@ -55,7 +54,7 @@ orm:
 		customStringFunctions:
 			group_concat: DoctrineExtensions\Query\Mysql\GroupConcat
 
-orm.annotations:
+orm.attributes:
 	mapping:
 		App: %appDir%
 
@@ -76,6 +75,11 @@ monolog:
 				- Monolog\Processor\WebProcessor()
 				- Monolog\Processor\IntrospectionProcessor()
 
+console:
+    url: %console.url%
+    catchExceptions: false
+    lazy: false
+
 webpackassets:
 	assetsDirs:
 		- %wwwDir%/build/admin
@@ -85,6 +89,7 @@ custompresenterfactory:
 	customMapping:
 		Admin:Login: App\Login\UI\LoginPresenter
 		Admin:User: App\User\UI\UserPresenter
+		Admin:Dashboard: App\Dashboard\UI\DashboardPresenter
 
 services:
 	- App\Router\RouterFactory::createRouter
@@ -100,3 +105,16 @@ services:
 	datetimeFormatFilter: App\UI\Filter\DatetimeFormatFilter
 	secondsFormatFilter: App\UI\Filter\SecondsFormatFilter
 	nullableStringFilter: App\UI\Filter\NullableStringFilter
+
+	#FORM
+	- App\UI\Base\Form\AdminFormFactory
+
+	#AppAdmin
+	- App\Admin\AppAdminRepository(App\Admin\AppAdmin)
+	- App\Admin\AppAdminAuthenticator
+	- App\Admin\AppAdminFacade
+	- App\Admin\CurrentAppAdminGetter
+	- App\Admin\Command\CreateAppAdminCommand
+
+	#Login
+	- App\Login\UI\Form\LoginFormFactory

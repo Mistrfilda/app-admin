@@ -10,7 +10,7 @@ use Mistrfilda\Datetime\Types\ImmutableDateTime;
 trait CreatedAt
 {
 
-	/** @ORM\Column(type="datetime_immutable") */
+	#[ORM\Column(type:'datetime_immutable')]
 	private ImmutableDateTime $createdAt;
 
 	public function getCreatedAt(): ImmutableDateTime

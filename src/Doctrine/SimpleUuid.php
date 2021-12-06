@@ -10,10 +10,8 @@ use Ramsey\Uuid\UuidInterface;
 trait SimpleUuid
 {
 
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="uuid", unique=true)
-	 */
+	#[ORM\Id]
+	#[ORM\Column(type: 'uuid', unique: true)]
 	private UuidInterface $id;
 
 	public function getId(): UuidInterface

@@ -4,14 +4,29 @@ declare(strict_types = 1);
 
 namespace App\Login\UI;
 
+use App\Login\UI\Form\LoginFormFactory;
 use App\UI\Base\BasePresenter;
+use App\UI\Base\Form\AdminForm;
 
 class LoginPresenter extends BasePresenter
 {
 
-	public function actionDefault(): void
+	/** @persistent */
+	public string $backlink = '';
+
+	public function __construct(private LoginFormFactory $loginFormFactory)
 	{
-		// Test
+		parent::__construct();
+	}
+
+	protected function createComponentLoginForm(): AdminForm
+	{
+		$onSuccess = function (): void {
+			$this->restoreRequest($this->backlink);
+			$this->redirect('Dashboard:default');
+		};
+
+		return $this->loginFormFactory->create($onSuccess);
 	}
 
 }

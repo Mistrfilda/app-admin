@@ -3,3 +3,7 @@ parameters:
 	paths:
 		- src
 		- tests
+
+	doctrine:
+		repositoryClass: App\Doctrine\BaseRepository
+		objectManagerLoader: tests/DoctrineObjectManager.php

@@ -9,7 +9,7 @@ use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Security\User;
 use stdClass;
 
-class BaseControlTemplate extends Template
+abstract class BaseControlTemplate extends Template
 {
 
 	public User $user;

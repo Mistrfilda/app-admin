@@ -9,9 +9,6 @@ use App\UI\Control\Datagrid\Column\IColumn;
 use Doctrine\ORM\QueryBuilder;
 use Nette\Utils\Strings;
 use Ramsey\Uuid\UuidInterface;
-use function array_key_exists;
-use function method_exists;
-use function sprintf;
 
 class DoctrineDataSource implements IDataSource
 {
@@ -37,12 +34,13 @@ class DoctrineDataSource implements IDataSource
 	{
 		$countQb = clone $this->qb;
 
-		/** @var string $result */
 		$result = $countQb
 			->select('count(:rootAlias)')
 			->setParameter('rootAlias', sprintf('%s.*', $this->getRootAlias()))
 			->getQuery()
 			->getSingleScalarResult();
+
+		assert(is_string($result));
 
 		return (int) $result;
 	}

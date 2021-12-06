@@ -10,7 +10,7 @@ use Mistrfilda\Datetime\Types\ImmutableDateTime;
 trait UpdatedAt
 {
 
-	/** @ORM\Column(type="datetime_immutable") */
+	#[ORM\Column(type:'datetime_immutable')]
 	private ImmutableDateTime $updatedAt;
 
 	public function getUpdatedAt(): ImmutableDateTime
