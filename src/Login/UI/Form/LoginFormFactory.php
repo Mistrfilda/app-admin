@@ -35,6 +35,7 @@ class LoginFormFactory
 		$form->onSuccess[] = function (AdminForm $form) use ($onSuccess): void {
 			$values = $form->getValues(LoginFormDTO::class);
 			assert($values instanceof LoginFormDTO);
+
 			try {
 				$this->currentAppAdminGetter->login($values->username, $values->password);
 			} catch (AuthenticationException) {
