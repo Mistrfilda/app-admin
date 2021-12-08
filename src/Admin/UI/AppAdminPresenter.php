@@ -9,4 +9,9 @@ use App\UI\Base\BaseAdminPresenter;
 class AppAdminPresenter extends BaseAdminPresenter
 {
 
+	public function renderDefault(): void
+	{
+		$this->template->heading = 'Uživatelé';
+	}
+
 }

@@ -24,7 +24,8 @@ abstract class BaseAdminPresenter extends BasePresenter
 			$this->redirect('Login:default', ['backlink' => $this->storeRequest()]);
 		}
 
-		$this->template->appAdmin = $this->currentAppAdminGetter->getAppAdmin();
+		$this->template->pageTitle = $this->basePresenterParameters->getPageTitle();
+		$this->template->currentAppAdmin = $this->currentAppAdminGetter->getAppAdmin();
 		$this->template->menuItems = (new MenuBuilder())->buildMenu();
 		$this->template->includeBody = true;
 	}

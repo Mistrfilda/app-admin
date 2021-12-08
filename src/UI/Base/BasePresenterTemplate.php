@@ -19,4 +19,6 @@ abstract class BasePresenterTemplate extends Template
 
 	public bool $includeBody;
 
+	public string $pageTitle;
+
 }

@@ -14,7 +14,7 @@ class MenuItem
 	public function __construct(
 		private string $presenter,
 		private string $action,
-		private string $icon,
+		private string|null $icon,
 		private string $label,
 		private array $childrens = [],
 		private array $additionalActivePresenters = [],
@@ -37,7 +37,7 @@ class MenuItem
 		return $this->presenter . ':' . $this->action;
 	}
 
-	public function getIcon(): string
+	public function getIcon(): string|null
 	{
 		return $this->icon;
 	}

@@ -1,3 +1,6 @@
+parameters:
+	pageTitle: 'App-starter'
+
 application:
 	errorPresenter: Error:Error
 	mapping:
@@ -88,8 +91,13 @@ custompresenterfactory:
 	presenterDir: %appDir%
 	customMapping:
 		Admin:Login: App\Login\UI\LoginPresenter
-		Admin:User: App\User\UI\UserPresenter
+		Admin:AppAdmin: App\Admin\UI\AppAdminPresenter
+		Admin:AppAdminChangePassword: App\Admin\UI\AppAdminChangePasswordPresenter
 		Admin:Dashboard: App\Dashboard\UI\DashboardPresenter
+
+latte:
+    macros:
+        - @svgMacro
 
 services:
 	- App\Router\RouterFactory::createRouter
@@ -105,6 +113,12 @@ services:
 	datetimeFormatFilter: App\UI\Filter\DatetimeFormatFilter
 	secondsFormatFilter: App\UI\Filter\SecondsFormatFilter
 	nullableStringFilter: App\UI\Filter\NullableStringFilter
+
+	#CUSTOM LATTE MACROS
+	svgMacro: App\UI\Icon\SvgMacro(%appDir%/../assets/svg)
+
+	#BASE PRESENTER PARAMETERS
+	- App\UI\Base\BasePresenterParameters(pageTitle: %pageTitle%)
 
 	#FORM
 	- App\UI\Base\Form\AdminFormFactory
