@@ -21,7 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Mistrfilda\Datetime\DatetimeFactory;
 use Nette\Application\UI\Control;
 
-class FrontDatagrid extends Control
+class Datagrid extends Control
 {
 
 	public const NULLABLE_PLACEHOLDER = '----';
@@ -178,7 +178,7 @@ class FrontDatagrid extends Control
 
 	public function render(): void
 	{
-		$template = $this->createTemplate(FrontDatagridTemplate::class);
+		$template = $this->createTemplate(DatagridTemplate::class);
 
 		$dataCount = $this->datasource->getCount();
 		$data = $this->datasource->getData($this->offset, $this->limit);
@@ -201,8 +201,18 @@ class FrontDatagrid extends Control
 		$template->items = $data;
 		$template->datasource = $this->datasource;
 
-		$template->setFile(__DIR__ . '/frontDatagrid.latte');
+		$template->setFile(__DIR__ . '/datagrid.latte');
 		$template->render();
+	}
+
+	public function setLimit(int $limit): void
+	{
+		$this->limit = $limit;
+	}
+
+	public function setMaxResultSet(int $limit): void
+	{
+		$this->setLimit($limit);
 	}
 
 	private function setPagination(): void

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Mistrfilda\Datetime\DatetimeFactory;
 use Nette\Security\Passwords;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\UuidInterface;
@@ -20,17 +21,21 @@ class AppAdminFacade
 
 	private LoggerInterface $logger;
 
+	private DatetimeFactory $datetimeFactory;
+
 	public function __construct(
 		EntityManagerInterface $entityManager,
 		AppAdminRepository $appAdminRepository,
 		Passwords $passwords,
 		LoggerInterface $logger,
+		DatetimeFactory $datetimeFactory,
 	)
 	{
 		$this->entityManager = $entityManager;
 		$this->appAdminRepository = $appAdminRepository;
 		$this->passwords = $passwords;
 		$this->logger = $logger;
+		$this->datetimeFactory = $datetimeFactory;
 	}
 
 	public function createAppAdmin(
@@ -54,6 +59,7 @@ class AppAdminFacade
 			$username,
 			$email,
 			$this->passwords->hash($password),
+			$this->datetimeFactory->createNow(),
 		);
 
 		$this->entityManager->persist($appAdmin);
@@ -82,6 +88,7 @@ class AppAdminFacade
 		$appAdmin->update(
 			$name,
 			$this->passwords->hash($password),
+			$this->datetimeFactory->createNow(),
 		);
 
 		$this->entityManager->flush();

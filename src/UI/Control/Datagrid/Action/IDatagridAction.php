@@ -5,12 +5,12 @@ declare(strict_types = 1);
 namespace App\UI\Control\Datagrid\Action;
 
 use App\Doctrine\IEntity;
-use App\UI\Control\Datagrid\FrontDatagrid;
+use App\UI\Control\Datagrid\Datagrid;
 
 interface IDatagridAction
 {
 
-	public function getDatagrid(): FrontDatagrid;
+	public function getDatagrid(): Datagrid;
 
 	public function getId(): string;
 

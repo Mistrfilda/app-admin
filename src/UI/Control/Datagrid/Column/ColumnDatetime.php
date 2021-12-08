@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\UI\Control\Datagrid\Column;
 
-use App\UI\Control\Datagrid\FrontDatagrid;
+use App\UI\Control\Datagrid\Datagrid;
 use Mistrfilda\Datetime\DatetimeFactory;
 use Mistrfilda\Datetime\Types\ImmutableDateTime;
 use Ramsey\Uuid\UuidInterface;
@@ -19,7 +19,7 @@ class ColumnDatetime extends ColumnText
 	private string $datetimeFormat = self::DEFAULT_FORMAT;
 
 	public function __construct(
-		FrontDatagrid $datagrid,
+		Datagrid $datagrid,
 		string $label,
 		string $column,
 		callable|null $getterMethod = null,

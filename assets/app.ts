@@ -10,7 +10,8 @@ declare global {
 import './scss/index.scss';
 
 //scripts
-import naja from "naja";
+import naja from 'naja';
+naja.initialize();
 
 import './js/LiveFormValidation';
 

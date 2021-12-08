@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\UI\Control\Datagrid\Action;
 
 use App\Doctrine\IEntity;
-use App\UI\Control\Datagrid\FrontDatagrid;
+use App\UI\Control\Datagrid\Datagrid;
 use App\UI\Tailwind\TailwindColorConstant;
 
 class DatagridAction implements IDatagridAction
@@ -17,7 +17,7 @@ class DatagridAction implements IDatagridAction
 	 * @param array<DatagridActionParameter> $parameters
 	 */
 	public function __construct(
-		private FrontDatagrid $datagrid,
+		private Datagrid $datagrid,
 		private string $id,
 		private string $label,
 		private string $destination,
@@ -66,7 +66,7 @@ class DatagridAction implements IDatagridAction
 		return self::TEMPLATE_FILE;
 	}
 
-	public function getDatagrid(): FrontDatagrid
+	public function getDatagrid(): Datagrid
 	{
 		return $this->datagrid;
 	}

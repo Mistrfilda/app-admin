@@ -6,12 +6,12 @@ namespace App\UI\Control\Datagrid;
 
 use App\UI\Control\Datagrid\Datasource\IDataSource;
 
-class FrontDatagridFactory
+class DatagridFactory
 {
 
-	public function create(IDataSource $dataSource): FrontDatagrid
+	public function create(IDataSource $dataSource): Datagrid
 	{
-		return new FrontDatagrid($dataSource);
+		return new Datagrid($dataSource);
 	}
 
 }

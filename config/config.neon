@@ -123,12 +123,19 @@ services:
 	#FORM
 	- App\UI\Base\Form\AdminFormFactory
 
+	#DATETIME FACTORY
+	- Mistrfilda\Datetime\DatetimeFactory
+
+	#DATAGRID
+	- App\UI\Control\Datagrid\DatagridFactory
+
 	#AppAdmin
 	- App\Admin\AppAdminRepository(App\Admin\AppAdmin)
 	- App\Admin\AppAdminAuthenticator
 	- App\Admin\AppAdminFacade
 	- App\Admin\CurrentAppAdminGetter
 	- App\Admin\Command\CreateAppAdminCommand
+	- App\Admin\UI\AppAdminGridFactory
 
 	#Login
 	- App\Login\UI\Form\LoginFormFactory

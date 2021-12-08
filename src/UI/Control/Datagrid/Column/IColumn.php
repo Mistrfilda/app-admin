@@ -4,14 +4,14 @@ declare(strict_types = 1);
 
 namespace App\UI\Control\Datagrid\Column;
 
-use App\UI\Control\Datagrid\FrontDatagrid;
+use App\UI\Control\Datagrid\Datagrid;
 use Mistrfilda\Datetime\Types\ImmutableDateTime;
 use Ramsey\Uuid\UuidInterface;
 
 interface IColumn
 {
 
-	public function getDatagrid(): FrontDatagrid;
+	public function getDatagrid(): Datagrid;
 
 	public function getLabel(): string;
 

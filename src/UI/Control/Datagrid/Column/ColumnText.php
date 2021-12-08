@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace App\UI\Control\Datagrid\Column;
 
+use App\UI\Control\Datagrid\Datagrid;
 use App\UI\Control\Datagrid\Filter\FilterText;
-use App\UI\Control\Datagrid\FrontDatagrid;
 use Mistrfilda\Datetime\Types\ImmutableDateTime;
 use Ramsey\Uuid\UuidInterface;
 use function sprintf;
@@ -19,7 +19,7 @@ class ColumnText implements IColumn
 	protected $getterMethod;
 
 	public function __construct(
-		protected FrontDatagrid $datagrid,
+		protected Datagrid $datagrid,
 		protected string $label,
 		protected string $column,
 		callable|null $getterMethod = null,
@@ -38,7 +38,7 @@ class ColumnText implements IColumn
 		return $this->label;
 	}
 
-	public function getDatagrid(): FrontDatagrid
+	public function getDatagrid(): Datagrid
 	{
 		return $this->datagrid;
 	}

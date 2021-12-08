@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\UI\Control\Datagrid\Column;
 
 use App\Doctrine\IEntity;
-use App\UI\Control\Datagrid\FrontDatagrid;
+use App\UI\Control\Datagrid\Datagrid;
 use Nette\Utils\Callback;
 use function sprintf;
 
@@ -18,7 +18,7 @@ class ColumnBadge extends ColumnText
 	protected $colorCallback;
 
 	public function __construct(
-		FrontDatagrid $datagrid,
+		Datagrid $datagrid,
 		string $label,
 		string $column,
 		protected string $color,
@@ -47,7 +47,7 @@ class ColumnBadge extends ColumnText
 
 	public function isNull(string $value): bool
 	{
-		return $value === FrontDatagrid::NULLABLE_PLACEHOLDER;
+		return $value === Datagrid::NULLABLE_PLACEHOLDER;
 	}
 
 	public function getColorClasses(IEntity $entity): string

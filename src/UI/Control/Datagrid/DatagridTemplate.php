@@ -14,12 +14,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
 
-class FrontDatagridTemplate extends Template
+class DatagridTemplate extends Template
 {
 
 	public Presenter $presenter;
 
-	public FrontDatagrid $control;
+	public Datagrid $control;
 
 	/** @var ArrayCollection<int, IColumn> */
 	public ArrayCollection $columns;
