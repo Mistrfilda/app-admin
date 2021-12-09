@@ -17,3 +17,5 @@ naja.initialize();
 import './js/LiveFormValidation';
 
 import './ts/alpine/AppAlpine';
+
+import './ts/select/select';

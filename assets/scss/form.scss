@@ -9,3 +9,8 @@
 input[type="text"]:disabled {
   @apply bg-gray-200;
 }
+
+.tom-span-bg {
+  @apply bg-cyan-500 #{!important};
+  background-image: none !important;
+}

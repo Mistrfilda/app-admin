@@ -11,7 +11,8 @@
     "live-form-validation": "^1.10.0",
     "naja": "^2.2.1",
     "postcss": "^8.3.11",
-    "tailwindcss": "^2.2.19"
+    "tailwindcss": "^2.2.19",
+    "tom-select": "^2.0.0"
   },
   "devDependencies": {
     "@symfony/webpack-encore": "^1.6.1",
