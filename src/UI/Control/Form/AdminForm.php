@@ -8,6 +8,7 @@ use Nette\Application\UI\Form;
 
 class AdminForm extends Form
 {
+	public const SELECT_PLACEHOLDER = '-- vyberte --';
 
 	private bool $isAjax = false;
 

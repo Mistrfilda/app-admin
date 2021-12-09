@@ -77,6 +77,40 @@
                     {$componentError}
                 {/if}
             </div>
+        {elseif $component instanceof Nette\Forms\Controls\SelectBox}
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start border-none sm:border-solid sm:border-t sm:border-gray-200 sm:pt-5">
+                <label for="{$component->getName()}" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                    {$component->getLabel()}
+                </label>
+                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                    {$component->getControl()->addAttributes(['class' => 'max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md'])}
+
+                    {if $componentError !== null}
+                        {$componentError}
+                    {/if}
+                </div>
+            </div>
+        {elseif $component instanceof Nette\Forms\Controls\CheckboxList}
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start border-none sm:border-solid sm:border-t sm:border-gray-200 sm:pt-5">
+                <label for="{$component->getName()}" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                    {$component->getLabel()}
+                </label>
+                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                    {foreach $component->getItems() as $key => $label}
+                        <fieldset class="space-y-5">
+                            <legend class="sr-only">Notifications</legend>
+                            <div class="relative flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input n:name="$component->getName():$key" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <label n:name="$component->getName():$key" class="font-medium text-gray-700">{$label}</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    {/foreach}
+                </div>
+            </div>
         {elseif $component instanceof Nette\Forms\Controls\SubmitButton}
             <div class="pt-5">
                 <div class="flex justify-end">
