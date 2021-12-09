@@ -51,12 +51,17 @@ class AppAdmin implements IEntity
 
 	public function update(
 		string $name,
-		string $password,
+		string $email,
+		string|null $password,
 		ImmutableDateTime $now,
 	): void
 	{
 		$this->name = $name;
-		$this->password = $password;
+		$this->email = $email;
+		if ($password !== null) {
+			$this->password = $password;
+		}
+
 		$this->updatedAt = $now;
 	}
 

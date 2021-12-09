@@ -1,0 +1,70 @@
+{varType Nette\Forms\Form $form}
+<form n:name="$form" class="space-y-8 divide-y divide-gray-200">
+    {if $form->hasErrors()}
+        <div class="space-y-8 sm:space-y-5">
+            <div>
+                {foreach $form->getErrors() as $error}
+                    <div class="rounded-md bg-red-100 p-4 mt-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <!-- Heroicon name: solid/x-circle -->
+                                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                     fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-red-800">
+                                    {$error}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                {/foreach}
+            </div>
+        </div>
+    {/if}
+    {include #formComponent $form->getComponents()}
+</form>
+
+{define #formComponent $components}
+    {foreach $components as $component}
+        {var $componentError = null}
+        {var $errorClass = ''}
+        {if $component->hasErrors()}
+            {capture $componentError}
+                {foreach $component->getErrors() as $error}
+                    <span class="span-form-error">{$error}</span>
+                {/foreach}
+            {/capture}
+            {var $errorClass = ' form-input-error'}
+        {/if}
+        {varType Nette\Forms\Controls\TextBase $component}
+        {if $component instanceof Nette\Forms\Controls\TextInput}
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                <label for="{$component->getName()}" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                    {$component->getLabel()}
+                </label>
+                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                    {$component->getControl()->addAttributes([
+                    'class' => 'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md form-control' . $errorClass
+                    ])}
+
+                    {if $componentError !== null}
+                        {$componentError}
+                    {/if}
+                </div>
+            </div>
+        {elseif $component instanceof Nette\Forms\Controls\SubmitButton}
+            <div class="pt-5">
+                <div class="flex justify-end">
+                    {$component->getControl()->addAttributes([
+                    'class' => 'ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                    ])}
+                </div>
+            </div>
+        {/if}
+    {/foreach}
+{/define}

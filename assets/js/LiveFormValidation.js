@@ -75,7 +75,7 @@ LiveForm.setOptions({
     messageTag: 'span',
     messageErrorClass: 'span-form-error',
     messageIdPostfix: '_message',
-    messageErrorPrefix: '&nbsp;<i class="fas fa-exclamation-circle"></i>&nbsp;',
+    messageErrorPrefix: '',
     showAllErrors: true,
     showValid: false,
     wait: false,

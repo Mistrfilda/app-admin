@@ -51,6 +51,23 @@ class AppAdminRepository extends BaseRepository
 		}
 	}
 
+	public function findByEmail(string $email): AppAdmin
+	{
+		$qb = $this->doctrineRepository->createQueryBuilder('appAdmin');
+
+		$qb->andWhere($qb->expr()->eq('appAdmin.email', ':email'));
+		$qb->setParameter('email', $email);
+
+		try {
+			$result = $qb->getQuery()->getSingleResult();
+			assert($result instanceof AppAdmin);
+
+			return $result;
+		} catch (NoResultException) {
+			throw new NoEntityFoundException();
+		}
+	}
+
 	public function createQueryBuilder(): QueryBuilder
 	{
 		return $this->doctrineRepository->createQueryBuilder('appAdmin');

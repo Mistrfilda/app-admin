@@ -72,7 +72,8 @@ class AppAdminFacade
 	public function updateAppAdmin(
 		UuidInterface $appAdminId,
 		string $name,
-		string $password,
+		string $email,
+		string|null $password,
 	): AppAdmin
 	{
 		$this->logger->info(
@@ -87,7 +88,8 @@ class AppAdminFacade
 		$appAdmin = $this->appAdminRepository->findById($appAdminId);
 		$appAdmin->update(
 			$name,
-			$this->passwords->hash($password),
+			$email,
+			$password !== null ? $this->passwords->hash($password) : null,
 			$this->datetimeFactory->createNow(),
 		);
 

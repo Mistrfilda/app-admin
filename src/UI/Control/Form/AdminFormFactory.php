@@ -2,10 +2,15 @@
 
 declare(strict_types = 1);
 
-namespace App\UI\Base\Form;
+namespace App\UI\Control\Form;
 
 class AdminFormFactory
 {
+
+	public function __construct(private AdminFormRenderer $adminFormRenderer)
+	{
+
+	}
 
 	public function create(string|null $mappedClass = null): AdminForm
 	{
@@ -13,6 +18,8 @@ class AdminFormFactory
 		if ($mappedClass !== null) {
 			$form->setMappedType($mappedClass);
 		}
+
+		$form->setRenderer($this->adminFormRenderer);
 
 		return $form;
 	}

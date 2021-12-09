@@ -1,6 +1,9 @@
 parameters:
 	pageTitle: 'App-starter'
 
+includes:
+	- forms.neon
+
 application:
 	errorPresenter: Error:Error
 	mapping:
@@ -122,7 +125,8 @@ services:
 	- App\UI\Base\BasePresenterParameters(pageTitle: %pageTitle%)
 
 	#FORM
-	- App\UI\Base\Form\AdminFormFactory
+	- App\UI\Control\Form\AdminFormFactory
+	- App\UI\Control\Form\AdminFormRenderer
 
 	#DATETIME FACTORY
 	- Mistrfilda\Datetime\DatetimeFactory
@@ -137,6 +141,7 @@ services:
 	- App\Admin\CurrentAppAdminGetter
 	- App\Admin\Command\CreateAppAdminCommand
 	- App\Admin\UI\AppAdminGridFactory
+	- App\Admin\UI\AppAdminFormFactory
 
 	#Login
 	- App\Login\UI\Form\LoginFormFactory

@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace App\Login\UI\Form;
 
 use App\Admin\CurrentAppAdminGetter;
-use App\UI\Base\Form\AdminForm;
-use App\UI\Base\Form\AdminFormFactory;
+use App\UI\Control\Form\AdminForm;
+use App\UI\Control\Form\AdminFormFactory;
 use Nette\Security\AuthenticationException;
 use function assert;
 

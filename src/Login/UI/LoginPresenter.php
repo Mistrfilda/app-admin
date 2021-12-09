@@ -6,7 +6,7 @@ namespace App\Login\UI;
 
 use App\Login\UI\Form\LoginFormFactory;
 use App\UI\Base\BasePresenter;
-use App\UI\Base\Form\AdminForm;
+use App\UI\Control\Form\AdminForm;
 
 class LoginPresenter extends BasePresenter
 {

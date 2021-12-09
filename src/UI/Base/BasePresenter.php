@@ -7,6 +7,8 @@ namespace App\UI\Base;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\InvalidLinkException;
 use Nette\Application\UI\Presenter;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 abstract class BasePresenter extends Presenter
 {
@@ -59,6 +61,16 @@ abstract class BasePresenter extends Presenter
 		}
 
 		return (string) $id;
+	}
+
+	protected function processParameterUuid(string $parameterName = 'id'): UuidInterface|null
+	{
+		$id = $this->getParameter($parameterName);
+		if (is_scalar($id) === false || (string) $id === '') {
+			return null;
+		}
+
+		return Uuid::fromString((string) $id);
 	}
 
 	/**
