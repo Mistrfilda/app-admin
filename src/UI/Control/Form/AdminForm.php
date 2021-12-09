@@ -5,9 +5,12 @@ declare(strict_types = 1);
 namespace App\UI\Control\Form;
 
 use Nette\Application\UI\Form;
+use Nette\Forms\Controls\SelectBox;
+use Nette\Utils\Json;
 
 class AdminForm extends Form
 {
+
 	public const SELECT_PLACEHOLDER = '-- vyberte --';
 
 	private bool $isAjax = false;
@@ -48,6 +51,29 @@ class AdminForm extends Form
 	public function getHeadingText(): string|null
 	{
 		return $this->headingText;
+	}
+
+	public function formatSelectData(SelectBox $selectBox): string
+	{
+		$items = $selectBox->getItems();
+		if ($selectBox->getPrompt() !== false) {
+			$items[null] = $selectBox->getPrompt();
+		}
+
+		$defaultValue = $selectBox->getValue();
+		if ($defaultValue === null) {
+			$defaultValue = $selectBox->getPrompt() !== false ? $selectBox->getPrompt() : '';
+		}
+
+		$data = [
+			'data' => $items,
+			'emptyOptionsMessage' => 'Nebyl nalezen žádný výsledek',
+			'name' => $selectBox->getName(),
+			'placeholder' => $defaultValue,
+			'value' => $selectBox->getValue() === null ? null : (string) $selectBox->getValue(),
+		];
+
+		return Json::encode($data);
 	}
 
 }
