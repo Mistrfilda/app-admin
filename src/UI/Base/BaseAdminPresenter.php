@@ -7,6 +7,11 @@ namespace App\UI\Base;
 use App\Admin\CurrentAppAdminGetter;
 use App\UI\Menu\MenuBuilder;
 
+/**
+ * Control is renderable Presenter component.
+ *
+ * @property-read BaseAdminPresenterTemplate $template
+ */
 abstract class BaseAdminPresenter extends BasePresenter
 {
 

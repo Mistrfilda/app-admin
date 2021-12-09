@@ -21,4 +21,9 @@ trait Uuid
 		return $this->id;
 	}
 
+	public function getIdToString(): string
+	{
+		return $this->id->toString();
+	}
+
 }

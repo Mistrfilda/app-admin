@@ -7,6 +7,7 @@ namespace App\UI\Control\Datagrid\Action;
 use App\Doctrine\IEntity;
 use App\UI\Control\Datagrid\Datagrid;
 use App\UI\Tailwind\TailwindColorConstant;
+use Ramsey\Uuid\UuidInterface;
 
 class DatagridAction implements IDatagridAction
 {
@@ -78,10 +79,16 @@ class DatagridAction implements IDatagridAction
 	{
 		$formatedParameters = [];
 		foreach ($this->parameters as $parameter) {
-			$formatedParameters[$parameter->getParameter()] = $this->datagrid->getDatasource()->getValueForKey(
+			$value = $this->datagrid->getDatasource()->getValueForKey(
 				$parameter->getReferencedColumn(),
 				$row,
 			);
+
+			if ($value instanceof UuidInterface) {
+				$value = $value->toString();
+			}
+
+			$formatedParameters[$parameter->getParameter()] = $value;
 		}
 
 		return $formatedParameters;

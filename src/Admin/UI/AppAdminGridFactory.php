@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Admin\UI;
 
 use App\Admin\AppAdminRepository;
+use App\UI\Control\Datagrid\Action\DatagridActionParameter;
 use App\UI\Control\Datagrid\Datagrid;
 use App\UI\Control\Datagrid\DatagridFactory;
 use App\UI\Control\Datagrid\Datasource\DoctrineDataSource;
@@ -33,6 +34,15 @@ class AppAdminGridFactory
 		$grid->addColumnBadge('email', 'Email', TailwindColorConstant::BLUE);
 		$grid->addColumnDatetime('createdAt', 'Vytvořen');
 		$grid->addColumnDatetime('createdAt', 'Poslední aktualizace');
+
+		$grid->addAction(
+			'edit',
+			'Editovat',
+			'AppAdminEdit:default',
+			[
+				new DatagridActionParameter('id', 'id'),
+			],
+		);
 
 		$grid->setMaxResultSet(2);
 

@@ -24,7 +24,6 @@
             x-data="frontMenu()"
             class="min-h-full"
     >
-        <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
         <div
                 x-show="isOpen()"
                 x-cloak
@@ -32,16 +31,6 @@
                 role="dialog"
                 aria-modal="true"
         >
-            <!--
-              Off-canvas menu overlay, show/hide based on off-canvas menu state.
-
-              Entering: "transition-opacity ease-linear duration-300"
-                From: "opacity-0"
-                To: "opacity-100"
-              Leaving: "transition-opacity ease-linear duration-300"
-                From: "opacity-100"
-                To: "opacity-0"
-            -->
             <div
                     x-show="isOpen()"
                     x-transition:enter="transition-opacity ease-linear duration-300"
@@ -54,16 +43,6 @@
             >
             </div>
 
-            <!--
-              Off-canvas menu, show/hide based on off-canvas menu state.
-
-              Entering: "transition ease-in-out duration-300 transform"
-                From: "-translate-x-full"
-                To: "translate-x-0"
-              Leaving: "transition ease-in-out duration-300 transform"
-                From: "translate-x-0"
-                To: "-translate-x-full"
-            -->
             <div
                     x-show="isOpen()"
                     x-transition:enter="transition ease-in-out duration-300 transform"
@@ -74,16 +53,6 @@
                     x-transition:leave-end="-translate-x-full"
                     class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-cyan-700"
             >
-                <!--
-                  Close button, show/hide based on off-canvas menu state.
-
-                  Entering: "ease-in-out duration-300"
-                    From: "opacity-0"
-                    To: "opacity-100"
-                  Leaving: "ease-in-out duration-300"
-                    From: "opacity-100"
-                    To: "opacity-0"
-                -->
                 <div
                         x-show="isOpen()"
                         x-transition:enter="ease-in-out duration-300"
@@ -205,7 +174,7 @@
                                         aria-expanded="false"
                                         aria-haspopup="true"
                                 >
-                                    {renderSvg 'user.svg', ['class' => 'h-8 w-8 rounded-full']}
+                                    {renderSvg 'user.svg', ['class' => 'h-5 w-5 rounded-full']}
                                     <span class="ml-3 text-gray-700 text-sm font-medium block"><span class="sr-only">Open user menu for </span> {$currentAppAdmin->getName()} </span>
                                     <!-- Heroicon name: solid/chevron-down -->
                                     {renderSvg 'chevron-down.svg', ['class' => 'flex-shrink-0 ml-1 h-5 w-5 text-gray-400 block']}
@@ -214,6 +183,7 @@
                             <div
                                     x-show="open"
                                     x-cloak
+                                    @click.outside="open = false"
                                     x-transition:enter="transition ease-out duration-100"
                                     x-transition:enter-start="transform opacity-0 scale-95"
                                     x-transition:enter-end="transform opacity-100 scale-100"
@@ -252,12 +222,9 @@
                                 </div>
                             </div>
                             <div class="mt-6 flex space-x-3 md:mt-0 md:ml-4">
-                                <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
-                                    Add money
-                                </button>
-                                <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
-                                    Send money
-                                </button>
+                                {ifset #headingButtons}
+                                    {include #headingButtons}
+                                {/ifset}
                             </div>
                         </div>
                     </div>

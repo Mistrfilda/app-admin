@@ -16,7 +16,14 @@ class MenuBuilder
 	{
 		return [
 			new MenuItem('Dashboard', 'default', SvgIcon::HOME, 'Dashboard'),
-			new MenuItem('AppAdmin', 'default', SvgIcon::USERS, 'Uživatelé'),
+			new MenuItem(
+				'AppAdmin',
+				'default',
+				SvgIcon::USERS,
+				'Uživatelé',
+				[],
+				['AppAdminEdit'],
+			),
 		];
 	}
 

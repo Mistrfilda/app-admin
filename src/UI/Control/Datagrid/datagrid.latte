@@ -5,56 +5,94 @@
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 {snippet items}
-                    <table class="min-w-full divide-y divide-gray-200 table-auto">
-                        <thead class="bg-gray-50">
-                        {varType App\UI\Front\Control\Datagrid\Column\IColumn $column}
-                        {varType App\UI\Front\Control\Datagrid\Action\IDatagridAction $action}
-                        <tr>
-                            {foreach $columns->toArray() as $column}
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {$column->getLabel()}
-                                </th>
-                            {/foreach}
-                            {if $actions->count() > 0}
-                                <th scope="col" class="relative px-6 py-3">
-                                    <span class="sr-only">Action</span>
-                                </th>
-                            {/if}
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- Odd row -->
-                        {foreach $items as $item}
-                            <tr n:class="$iterator->getCounter() % 2 === 0 ? 'bg-white' : 'bg-gray-100'">
+                    <div class="hidden sm:block">
+                        <table class="min-w-full divide-y divide-gray-200 table-auto">
+                            <thead class="bg-gray-50">
+                            {varType App\UI\Front\Control\Datagrid\Column\IColumn $column}
+                            {varType App\UI\Front\Control\Datagrid\Action\IDatagridAction $action}
+                            <tr>
                                 {foreach $columns->toArray() as $column}
-                                    {include
-                                        $column->getTemplate(),
-                                        value: $datasource->getValueForColumn($column, $item),
-                                        column: $column,
-                                        item: $item
-                                    }
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        {$column->getLabel()}
+                                    </th>
                                 {/foreach}
-
-                                {foreach $actions->toArray() as $action}
-                                    {include
-                                        $action->getTemplateFile(),
-                                        action: $action,
-                                        item: $item
-                                    }
-                                {/foreach}
+                                {if $actions->count() > 0}
+                                    <th scope="col" class="relative px-6 py-3">
+                                        <span class="sr-only">Action</span>
+                                    </th>
+                                {/if}
                             </tr>
+                            </thead>
+                            <tbody>
+                            {foreach $items as $item}
+                                <tr n:class="$iterator->getCounter() % 2 === 0 ? 'bg-white' : 'bg-gray-100'">
+                                    {foreach $columns->toArray() as $column}
+                                        {include
+                                            $column->getTemplate(),
+                                            value: $datasource->getValueForColumn($column, $item),
+                                            column: $column,
+                                            item: $item
+                                        }
+                                    {/foreach}
+
+                                    {foreach $actions->toArray() as $action}
+                                        {include
+                                            $action->getTemplateFile(),
+                                            action: $action,
+                                            item: $item
+                                        }
+                                    {/foreach}
+                                </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <ul role="list" class="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
+                        {foreach $items as $item}
+                            <li>
+                                <span class="flex items-center space-x-4 bg-white hover:bg-gray-50">
+                                    <span class="w-full">
+                                        <span class="flex flex-col text-gray-500 text-sm truncate">
+                                            {foreach $columns->toArray() as $column}
+                                                <div class="border-b border-gray-200 py-3 px-3 w-full flex justify-between">
+                                                    <div class="text-gray-800">
+                                                        {$column->getLabel()}
+                                                    </div>
+                                                    <div>
+                                                    {include
+                                                        $column->getTemplate(),
+                                                        value: $datasource->getValueForColumn($column, $item),
+                                                        column: $column,
+                                                        item: $item
+                                                    }
+                                                    </div>
+                                                </div>
+                                            {/foreach}
+                                            {foreach $actions->toArray() as $action}
+                                                <div class="border-b border-gray-200 py-3 px-3 w-full flex justify-center">
+                                                {include
+                                                    $action->getTemplateFile(),
+                                                    action: $action,
+                                                    item: $item
+                                                }
+                                                </div>
+                                            {/foreach}
+                                        </span>
+                                    </span>
+                                </span>
+                            </li>
                         {/foreach}
-                        </tbody>
-                    </table>
+                    </ul>
                 {/snippet}
 
                 {snippet pagination}
                     <div
-                            class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
+                            class="bg-white px-4 py-3 flex items-center justify-center border-t border-gray-200 sm:px-6"
                     >
                         <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                            <div>
+                            <div class="hidden sm:block">
                                 <p class="text-sm leading-5 text-gray-700">
                                     Showing
                                     <span class="font-medium"> {$pagination->getOffset() + 1} </span>

@@ -93,6 +93,7 @@ custompresenterfactory:
 		Admin:Login: App\Login\UI\LoginPresenter
 		Admin:AppAdmin: App\Admin\UI\AppAdminPresenter
 		Admin:AppAdminChangePassword: App\Admin\UI\AppAdminChangePasswordPresenter
+		Admin:AppAdminEdit: App\Admin\UI\AppAdminEditPresenter
 		Admin:Dashboard: App\Dashboard\UI\DashboardPresenter
 
 latte:
