@@ -49,6 +49,8 @@ class AppAdminFormFactory
 			->setRequired()
 			->addRule(Form::EQUAL, 'Hesla se neshodují', $password);
 
+		$form->addCheckbox('forceNewPassword', 'Vyžadovat změnu hesla');
+
 		$form->onValidate[] = function (Form $form) use ($id): void {
 			$values = $form->getValues(ArrayHash::class);
 			assert($values instanceof ArrayHash);
@@ -78,12 +80,14 @@ class AppAdminFormFactory
 		$form->onSuccess[] = function (Form $form) use ($id, $onSuccess): void {
 			$values = $form->getValues(ArrayHash::class);
 			assert($values instanceof ArrayHash);
+
 			if ($id !== null) {
 				$this->appAdminFacade->updateAppAdmin(
 					$id,
 					$values->name,
 					$values->email,
 					$values->password,
+					$values->forceNewPassword,
 				);
 			} else {
 				$this->appAdminFacade->createAppAdmin(
@@ -91,6 +95,7 @@ class AppAdminFormFactory
 					$values->username,
 					$values->email,
 					$values->password,
+					$values->forceNewPassword,
 				);
 			}
 
@@ -116,6 +121,7 @@ class AppAdminFormFactory
 			'username' => $appAdmin->getUsername(),
 			'email' => $appAdmin->getEmail(),
 			'name' => $appAdmin->getName(),
+			'forceNewPassword' => $appAdmin->isNewPasswordForced(),
 		]);
 	}
 

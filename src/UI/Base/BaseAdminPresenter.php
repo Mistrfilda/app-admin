@@ -29,6 +29,13 @@ abstract class BaseAdminPresenter extends BasePresenter
 			$this->redirect('Login:default', ['backlink' => $this->storeRequest()]);
 		}
 
+		if (
+			$this->presenter->name !== 'Admin:AppAdminChangePassword'
+			&& $this->currentAppAdminGetter->getAppAdmin()->isNewPasswordForced()
+		) {
+			$this->redirect('AppAdminChangePassword:default');
+		}
+
 		$this->template->pageTitle = $this->basePresenterParameters->getPageTitle();
 		$this->template->currentAppAdmin = $this->currentAppAdminGetter->getAppAdmin();
 		$this->template->menuItems = (new MenuBuilder())->buildMenu();

@@ -144,6 +144,7 @@ services:
 	- App\Admin\Command\CreateAppAdminCommand
 	- App\Admin\UI\AppAdminGridFactory
 	- App\Admin\UI\AppAdminFormFactory
+	- App\Admin\UI\AppAdminChangePasswordFormFactory
 
 	#Login
 	- App\Login\UI\Form\LoginFormFactory

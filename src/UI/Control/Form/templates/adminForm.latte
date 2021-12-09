@@ -1,4 +1,4 @@
-{varType Nette\Forms\Form $form}
+{varType App\UI\Control\Form\AdminForm $form}
 <form n:name="$form" class="space-y-8 divide-y divide-gray-200">
     {if $form->hasErrors()}
         <div class="space-y-8 sm:space-y-5">
@@ -8,12 +8,7 @@
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <!-- Heroicon name: solid/x-circle -->
-                                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                     fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                                          clip-rule="evenodd"/>
-                                </svg>
+                                {renderSvg 'x-circle.svg', ['class' => 'h-5 w-5 text-red-400']}
                             </div>
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-red-800">
@@ -26,6 +21,19 @@
             </div>
         </div>
     {/if}
+    {if $form->hasHeading()}
+        <div>
+            {if $form->getHeadingTitle() !== null}
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                {$form->getHeadingTitle()}
+            </h3>
+            {/if}
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                {$form->getHeadingText()}
+            </p>
+        </div>
+    {/if}
+
     {include #formComponent $form->getComponents()}
 </form>
 
@@ -43,7 +51,7 @@
         {/if}
         {varType Nette\Forms\Controls\TextBase $component}
         {if $component instanceof Nette\Forms\Controls\TextInput}
-            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start border-none sm:border-solid sm:border-t sm:border-gray-200 sm:pt-5">
                 <label for="{$component->getName()}" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                     {$component->getLabel()}
                 </label>
@@ -56,6 +64,18 @@
                         {$componentError}
                     {/if}
                 </div>
+            </div>
+        {elseif $component instanceof Nette\Forms\Controls\Checkbox}
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start border-none sm:border-solid sm:border-gray-200 sm:pt-5">
+                <div>
+                    {$component->getLabelPart()->addAttributes(['class' => 'text-sm font-medium text-gray-700'])}
+                </div>
+                <div class="flex items-center h-5">
+                    {$component->getControlPart()->addAttributes(['class' => 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded mr-2'])}
+                </div>
+                {if $componentError !== null}
+                    {$componentError}
+                {/if}
             </div>
         {elseif $component instanceof Nette\Forms\Controls\SubmitButton}
             <div class="pt-5">

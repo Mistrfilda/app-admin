@@ -50,6 +50,7 @@ class CreateAppAdminCommand extends Command
 			$username,
 			$email,
 			$password,
+			true,
 		);
 
 		return 0;
