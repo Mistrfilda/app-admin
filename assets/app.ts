@@ -3,6 +3,7 @@ declare global {
         frontMenu: any;
         dropdown: any;
         Alpine: any;
+        flashMessage: any;
     }
 }
 

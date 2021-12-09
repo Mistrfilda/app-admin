@@ -11,7 +11,7 @@ Alpine.data('frontMenu', () => ({
     isOpen() {
         return this.show;
     }
-}))
+}));
 
 Alpine.data('dropdown', () => ({
     open: false,
@@ -19,7 +19,15 @@ Alpine.data('dropdown', () => ({
     toggle() {
         this.open = !this.open
     }
-}))
+}));
+
+Alpine.data('flashMessage', () => ({
+    open: true,
+
+    close() {
+        this.open = false;
+    }
+}));
 
 window.Alpine = Alpine;
 Alpine.start();

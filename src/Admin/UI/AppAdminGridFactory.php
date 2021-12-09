@@ -44,8 +44,6 @@ class AppAdminGridFactory
 			],
 		);
 
-		$grid->setMaxResultSet(2);
-
 		return $grid;
 	}
 
