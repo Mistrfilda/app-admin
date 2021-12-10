@@ -5,7 +5,6 @@ import Alpine from 'alpinejs';
 Alpine.data('frontMenu', () => ({
     show: false,
     click() {
-        console.log(this.show);
         this.show = !this.show
     },
     isOpen() {
@@ -87,8 +86,6 @@ Alpine.data('select', (config: any) => ({
 
         if (!(this.value in this.options)) this.value = null
 
-        console.log(typeof this.value);
-
         this.$watch('search', ((value: string) => {
             if (!this.open || !value) return this.options = this.data
 
@@ -110,7 +107,6 @@ Alpine.data('select', (config: any) => ({
         this.value = Object.keys(this.options)[this.focusedOptionIndex];
 
         this.closeListbox();
-        console.log(typeof this.value);
     },
 
     toggleListboxVisibility: function () {
