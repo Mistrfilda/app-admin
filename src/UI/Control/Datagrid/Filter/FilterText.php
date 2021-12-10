@@ -9,22 +9,20 @@ use App\UI\Control\Datagrid\Column\ColumnText;
 class FilterText implements IFilter
 {
 
-	public const TYPE = 'FILTER_TEXT';
-
-	private string|null $value;
+	private string|int|null $value = null;
 
 	public function __construct(private ColumnText $column)
 	{
 	}
 
-	public function setValue(string $value): void
+	public function setValue(int|string $value): void
 	{
 		$this->value = $value;
 	}
 
 	public function getType(): string
 	{
-		return self::TYPE;
+		return FilterType::FILTER_TEXT;
 	}
 
 	public function getColumn(): ColumnText
@@ -32,9 +30,14 @@ class FilterText implements IFilter
 		return $this->column;
 	}
 
-	public function getValue(): mixed
+	public function getValue(): int|string|null
 	{
 		return $this->value;
+	}
+
+	public function isValueSet(): bool
+	{
+		return $this->value !== null && $this->value !== '';
 	}
 
 }

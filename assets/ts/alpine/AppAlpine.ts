@@ -124,5 +124,13 @@ Alpine.data('select', (config: any) => ({
     }
 }));
 
+Alpine.data('datagridFilter', () => ({
+    show: false,
+
+    click() {
+        this.show = !this.show;
+    }
+}));
+
 window.Alpine = Alpine;
 Alpine.start();

@@ -13,6 +13,10 @@ interface IFilter
 
 	public function getColumn(): IColumn;
 
-	public function getValue(): mixed;
+	public function getValue(): int|string|null;
+
+	public function setValue(int|string $value): void;
+
+	public function isValueSet(): bool;
 
 }

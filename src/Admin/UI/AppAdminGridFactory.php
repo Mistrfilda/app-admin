@@ -29,9 +29,9 @@ class AppAdminGridFactory
 			),
 		);
 
-		$grid->addColumnText('name', 'Jméno');
-		$grid->addColumnText('username', 'Uživatelské jméno');
-		$grid->addColumnBadge('email', 'Email', TailwindColorConstant::BLUE);
+		$grid->addColumnText('name', 'Jméno')->setFilterText();
+		$grid->addColumnText('username', 'Uživatelské jméno')->setFilterText();
+		$grid->addColumnBadge('email', 'Email', TailwindColorConstant::BLUE)->setFilterText();
 		$grid->addColumnDatetime('createdAt', 'Vytvořen');
 		$grid->addColumnDatetime('createdAt', 'Poslední aktualizace');
 

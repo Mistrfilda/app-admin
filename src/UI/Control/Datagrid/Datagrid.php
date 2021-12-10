@@ -12,10 +12,13 @@ use App\UI\Control\Datagrid\Column\ColumnDatetime;
 use App\UI\Control\Datagrid\Column\ColumnText;
 use App\UI\Control\Datagrid\Column\IColumn;
 use App\UI\Control\Datagrid\Datasource\IDataSource;
+use App\UI\Control\Datagrid\Filter\FilterForm;
 use App\UI\Control\Datagrid\Filter\FilterText;
+use App\UI\Control\Datagrid\Filter\FilterValue;
 use App\UI\Control\Datagrid\Filter\IFilter;
 use App\UI\Control\Datagrid\Pagination\Pagination;
 use App\UI\Control\Datagrid\Pagination\PaginationService;
+use App\UI\Control\Form\AdminForm;
 use App\UI\Tailwind\TailwindColorConstant;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mistrfilda\Datetime\DatetimeFactory;
@@ -32,16 +35,25 @@ class Datagrid extends Control
 	/** @persistent */
 	public int $limit;
 
+	/**
+	 * @var array<string, string|int>
+	 *
+	 * @persistent
+	 */
+	public array $parameterFilters = [];
+
 	/** @var ArrayCollection<int, IColumn> */
 	private ArrayCollection $columns;
 
-	/** @var ArrayCollection<int, IFilter> */
+	/** @var ArrayCollection<string, IFilter> */
 	private ArrayCollection $filters;
 
 	/** @var ArrayCollection<int, IDatagridAction> */
 	private ArrayCollection $actions;
 
 	private PaginationService $paginationService;
+
+	private bool $filterApplied = false;
 
 	public function __construct(private IDataSource $datasource)
 	{
@@ -141,7 +153,7 @@ class Datagrid extends Control
 	public function setFilterText(ColumnText $column): FilterText
 	{
 		$filter = new FilterText($column);
-		$this->filters->add($filter);
+		$this->filters->set($filter->getColumn()->getColumn(), $filter);
 
 		return $filter;
 	}
@@ -164,10 +176,17 @@ class Datagrid extends Control
 
 	public function handleArrowRight(): void
 	{
-		if ($this->offset + $this->limit < $this->datasource->getCount()) {
+		if ($this->offset + $this->limit < $this->datasource->getCount($this->filters)) {
 			$this->offset += $this->limit;
 		}
 
+		$this->redrawGridData();
+	}
+
+	public function handleResetFilters(): void
+	{
+		$this->parameterFilters = [];
+		$this->redrawControl('filters');
 		$this->redrawGridData();
 	}
 
@@ -180,8 +199,17 @@ class Datagrid extends Control
 	{
 		$template = $this->createTemplate(DatagridTemplate::class);
 
-		$dataCount = $this->datasource->getCount();
-		$data = $this->datasource->getData($this->offset, $this->limit);
+		if ($this->filterApplied === false && count($this->parameterFilters) > 0) {
+			$values = [];
+			foreach ($this->parameterFilters as $key => $value) {
+				$values[] = new FilterValue($key, $value);
+			}
+
+			$this->filter($values);
+		}
+
+		$dataCount = $this->datasource->getCount($this->filters);
+		$data = $this->datasource->getData($this->offset, $this->limit, $this->filters);
 
 		$template->filters = $this->filters;
 		$template->columns = $this->columns;
@@ -213,6 +241,41 @@ class Datagrid extends Control
 	public function setMaxResultSet(int $limit): void
 	{
 		$this->setLimit($limit);
+	}
+
+	/**
+	 * @return ArrayCollection<string, IFilter>
+	 */
+	public function getFilters(): ArrayCollection
+	{
+		return $this->filters;
+	}
+
+	/**
+	 * @param array<int, FilterValue> $values
+	 */
+	public function filter(array $values): void
+	{
+		foreach ($values as $value) {
+			$filter = $this->filters->get($value->getKey());
+			if ($filter !== null) {
+				$filter->setValue($value->getValue());
+				$this->parameterFilters[$value->getKey()] = $value->getValue();
+			}
+		}
+
+		$this->filterApplied = true;
+		$this->redrawGridData();
+	}
+
+	protected function createComponentFilterForm(): AdminForm
+	{
+		return (new FilterForm())->createForm($this);
+	}
+
+	public function resetPagination(): void
+	{
+		$this->offset = 0;
 	}
 
 	private function setPagination(): void

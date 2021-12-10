@@ -4,6 +4,7 @@ declare global {
         dropdown: any;
         Alpine: any;
         flashMessage: any;
+        datagridFilter: any;
     }
 }
 

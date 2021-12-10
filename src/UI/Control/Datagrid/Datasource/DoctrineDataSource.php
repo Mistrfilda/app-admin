@@ -6,6 +6,9 @@ namespace App\UI\Control\Datagrid\Datasource;
 
 use App\Doctrine\IEntity;
 use App\UI\Control\Datagrid\Column\IColumn;
+use App\UI\Control\Datagrid\Filter\FilterText;
+use App\UI\Control\Datagrid\Filter\IFilter;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 use Nette\Utils\Strings;
 use Ramsey\Uuid\UuidInterface;
@@ -17,28 +20,40 @@ class DoctrineDataSource implements IDataSource
 	{
 	}
 
-	/** @return array<string|int, IEntity> */
-	public function getData(int $offset, int $limit): array
+	/**
+	 * @param ArrayCollection<string, IFilter> $filters
+	 * @return array<string|int, IEntity>
+	 */
+	public function getData(int $offset, int $limit, ArrayCollection $filters): array
 	{
+		$this->qb
+			->setFirstResult($offset)
+			->setMaxResults($limit);
+
+		$this->addFilterToQuery($filters, $this->qb);
+
 		/** @var array<string|int, IEntity> $results */
 		$results = $this->qb
-			->setFirstResult($offset)
-			->setMaxResults($limit)
 			->getQuery()
 			->getResult();
 
 		return $results;
 	}
 
-	public function getCount(): int
+	/**
+	 * @param ArrayCollection<string, IFilter> $filters
+	 */
+	public function getCount(ArrayCollection $filters): int
 	{
 		$countQb = clone $this->qb;
 
-		$result = $countQb
+		$countQb
 			->select('count(:rootAlias)')
-			->setParameter('rootAlias', sprintf('%s.*', $this->getRootAlias()))
-			->getQuery()
-			->getSingleScalarResult();
+			->setParameter('rootAlias', sprintf('%s.*', $this->getRootAlias()));
+
+		$this->addFilterToQuery($filters, $countQb);
+
+		$result = $countQb->getQuery()->getSingleScalarResult();
 
 		assert(is_string($result));
 
@@ -91,6 +106,33 @@ class DoctrineDataSource implements IDataSource
 		}
 
 		throw new DoctrineDataSourceException('Root alias not found');
+	}
+
+	/**
+	 * @param ArrayCollection<string, IFilter> $filters
+	 */
+	private function addFilterToQuery(ArrayCollection $filters, QueryBuilder $qb): void
+	{
+		$rootAlias = $this->getRootAlias();
+		$index = 0;
+		foreach ($filters as $filter) {
+			if ($filter->isValueSet() === false) {
+				continue;
+			}
+
+			if ($filter instanceof FilterText) {
+				$key = ':param_' . $index;
+				$value = $filter->getValue();
+				$qb->andWhere($qb->expr()->like(
+					$rootAlias . '.' . $filter->getColumn()->getColumn(),
+					$key,
+				));
+
+				$qb->setParameter($key, '%' . $value . '%');
+			}
+
+			$index++;
+		}
 	}
 
 }
