@@ -1,5 +1,5 @@
 {varType App\UI\Control\Form\AdminForm $form}
-<form n:name="$form" class="space-y-8 divide-y divide-gray-200">
+<form n:name="$form" class="space-y-8">
     {if $form->hasErrors()}
         <div class="space-y-8 sm:space-y-5">
             <div>
@@ -24,9 +24,9 @@
     {if $form->hasHeading()}
         <div>
             {if $form->getHeadingTitle() !== null}
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
-                {$form->getHeadingTitle()}
-            </h3>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    {$form->getHeadingTitle()}
+                </h3>
             {/if}
             <p class="mt-1 max-w-2xl text-sm text-gray-500">
                 {$form->getHeadingText()}
@@ -57,7 +57,23 @@
                 </label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     {$component->getControl()->addAttributes([
-                    'class' => 'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xl sm:text-sm border-gray-300 rounded-md form-control' . $errorClass
+                    'class' => 'max-w-lg block w-full shadow-sm focus:ring-beige-500 focus:border-beige-500 sm:max-w-xl sm:text-sm border-gray-300 rounded-md form-control' . $errorClass
+                    ])}
+
+                    {if $componentError !== null}
+                        {$componentError}
+                    {/if}
+                </div>
+            </div>
+        {elseif $component instanceof Nette\Forms\Controls\TextArea}
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start border-none sm:border-solid sm:border-t sm:border-gray-200 sm:pt-5">
+                <label for="{$component->getName()}" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                    {$component->getLabel()}
+                </label>
+                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                    {$component->getControl()->addAttributes([
+                    'class' => 'shadow-sm sm:max-w-xl focus:ring-beige-500 focus:border-beige-500 block w-full sm:text-sm border-gray-300 rounded-md form-control' . $errorClass,
+                    'rows' => 8
                     ])}
 
                     {if $componentError !== null}
@@ -71,7 +87,7 @@
                     {$component->getLabelPart()->addAttributes(['class' => 'text-sm font-medium text-gray-700'])}
                 </div>
                 <div class="flex items-center h-5">
-                    {$component->getControlPart()->addAttributes(['class' => 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded mr-2'])}
+                    {$component->getControlPart()->addAttributes(['class' => 'focus:ring-beige-500 h-4 w-4 text-beige-600 border-gray-300 rounded mr-2'])}
                 </div>
                 {if $componentError !== null}
                     {$componentError}
@@ -101,7 +117,7 @@
                             <legend class="sr-only">Notifications</legend>
                             <div class="relative flex items-start">
                                 <div class="flex items-center h-5">
-                                    <input n:name="$component->getName():$key" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                    <input n:name="$component->getName():$key" type="checkbox" class="focus:ring-beige-500 h-4 w-4 text-beige-600 border-gray-300 rounded">
                                 </div>
                                 <div class="ml-3 text-sm">
                                     <label n:name="$component->getName():$key" class="font-medium text-gray-700">{$label}</label>
@@ -118,7 +134,7 @@
                 </label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     {$component->getControl()->addAttributes([
-                    'class' => 'tom-select-selector w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xl sm:text-sm border-gray-300 rounded-md form-control mt-2' . $errorClass
+                    'class' => 'tom-select-selector w-full shadow-sm focus:ring-beige-500 focus:border-beige-500 sm:max-w-xl sm:text-sm border-gray-300 rounded-md form-control mt-2' . $errorClass
                     ])}
                 </div>
                 {if $componentError !== null}
@@ -127,8 +143,8 @@
             </div>
         {elseif $component instanceof Nette\Forms\Controls\UploadControl}
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label for="cover-photo" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                    Cover photo
+                <label for="{$component->getName()}" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                    {$component->getLabel()}
                 </label>
                 <div
                         class="mt-1 sm:mt-0 sm:col-span-2"
@@ -146,10 +162,10 @@
                                 </svg>
                             {/if}
                             <div class="flex text-sm text-gray-600 justify-center">
-                                <label class="border-2 border-gray-200 p-3 w-full block rounded cursor-pointer my-2 form-control" for="customFile" x-data="{ files: null }">
-                                    <span x-text="files ? files.map(file => file.name).join(', ') : 'Nahrajte soubor'"></span>
-                                    <input n:name="{$component->getName()}" type="file" class="sr-only" id="customFile" x-on:change="files = Object.values($event.target.files)">
-                                </label>
+                                    <label class="border-2 border-gray-200 p-3 w-full block rounded cursor-pointer my-2 form-control" for="customFile" x-data="{ files: null }">
+                                        <span x-text="files ? files.map(file => file.name).join(', ') : 'Nahrajte soubor'"></span>
+                                        <input n:name="{$component->getName()}" type="file" class="sr-only" id="customFile" x-on:change="files = Object.values($event.target.files)">
+                                    </label>
                             </div>
                             {if $component->getOption('description') !== null}
                                 <p class="text-xs text-gray-500">
@@ -167,7 +183,7 @@
             <div class="pt-5">
                 <div class="flex justify-end">
                     {$component->getControl()->addAttributes([
-                    'class' => 'ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                    'class' => 'ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-beige-600 hover:bg-beige-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-beige-500'
                     ])}
                 </div>
             </div>

@@ -8,6 +8,7 @@ use App\UI\Control\Datagrid\Action\DatagridAction;
 use App\UI\Control\Datagrid\Action\DatagridActionParameter;
 use App\UI\Control\Datagrid\Action\IDatagridAction;
 use App\UI\Control\Datagrid\Column\ColumnBadge;
+use App\UI\Control\Datagrid\Column\ColumnBadgeArray;
 use App\UI\Control\Datagrid\Column\ColumnDatetime;
 use App\UI\Control\Datagrid\Column\ColumnText;
 use App\UI\Control\Datagrid\Column\IColumn;
@@ -85,6 +86,27 @@ class Datagrid extends Control
 	): ColumnText
 	{
 		$column = new ColumnBadge(
+			$this,
+			$label,
+			$column,
+			$color,
+			$getterMethod,
+			$colorCallback,
+		);
+		$this->columns->add($column);
+
+		return $column;
+	}
+
+	public function addColumnBadgeArray(
+		string $column,
+		string $label,
+		string $color,
+		callable|null $getterMethod = null,
+		callable|null $colorCallback = null,
+	): ColumnText
+	{
+		$column = new ColumnBadgeArray(
 			$this,
 			$label,
 			$column,
