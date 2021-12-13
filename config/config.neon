@@ -148,3 +148,6 @@ services:
 
 	#Login
 	- App\Login\UI\Form\LoginFormFactory
+
+	#Dashboard
+	- App\Dashboard\DashboardValueBuilder
