@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\UI\Control\Form;
 
+use App\UI\Control\Form\Input\CustomFileUpload;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\SelectBox;
 use Nette\Utils\Json;
@@ -18,6 +19,14 @@ class AdminForm extends Form
 	private string|null $headingTitle = null;
 
 	private string|null $headingText = null;
+
+	/**
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
+	 */
+	public function addUpload(string $name, $label = null): CustomFileUpload
+	{
+		return $this[$name] = new CustomFileUpload($label, false);
+	}
 
 	public function ajax(): void
 	{
