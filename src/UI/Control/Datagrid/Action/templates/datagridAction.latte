@@ -1,11 +1,25 @@
-{varType App\UI\Front\Control\Datagrid\Action\DatagridAction $action}
+{varType App\UI\Control\Datagrid\Action\DatagridAction $action}
 {varType App\Doctrine\IEntity $item}
 
 {parameters
-    App\UI\Front\Control\Datagrid\Action\DatagridAction $action,
+    App\UI\Control\Datagrid\Action\DatagridAction $action,
     App\Doctrine\IEntity $item
 }
 
-<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-    <a href="{plink $action->getDestination(), (expand) $action->formatParametersForAction($item)}" class="text-{$action->getColor()}-600 hover:text-{$action->getColor()}-900">{$action->getLabel()}</a>
-</td>
+
+<a href="{plink $action->getDestination(), (expand) $action->formatParametersForAction($item)}"
+   class="text-{$action->getColor()}-600 hover:text-{$action->getColor()}-900 {if $action->isAjax()} ajax {/if}"
+   {if $action->getConfirmation() !== null}
+        onclick="return confirm({$action->getConfirmation()})"
+   {/if}
+>
+    {if $action->getIcon() !== null}
+        <button
+                class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-{$action->getColor()}-600 hover:bg-{$action->getColor()}-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            {renderSvg $action->getIcon(), ['class' => 'w-4 h-4 mr-1']}
+            {$action->getLabel()}
+        </button>
+    {else}
+        {$action->getLabel()}
+    {/if}
+</a>

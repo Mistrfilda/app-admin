@@ -38,6 +38,19 @@ class CurrentAppAdminGetter
 		);
 	}
 
+	public function getAppAdminOrNull(): AppAdmin|null
+	{
+		if (!$this->isLoggedIn() || $this->user->getIdentity() === null) {
+			return null;
+		}
+
+		assert(is_string($this->user->getIdentity()->getId()));
+
+		return $this->appAdminRepository->findById(
+			Uuid::fromString($this->user->getIdentity()->getId()),
+		);
+	}
+
 	public function login(string $username, string $password): void
 	{
 		$this->user->login($username, $password);

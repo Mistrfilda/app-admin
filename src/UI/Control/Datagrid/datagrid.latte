@@ -10,8 +10,7 @@
                             <div class="px-4 py-5">
                                 <button
                                         @click="click()"
-                                        type="button"
-                                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+                                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                 >
                                 <span
                                         x-text="show === false ? 'Zobrazit filtr' : 'Skrýt filtr'"
@@ -46,7 +45,7 @@
                                                                         </label>
                                                                         <input n:name="{$component->getName()}"
                                                                                 autocomplete="given-name"
-                                                                                class="mt-1 focus:ring-cyan-500 focus:border-cyan-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                                                                class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                                                     </div>
                                                                 {/if}
                                                             {/foreach}
@@ -55,12 +54,11 @@
                                                     <div class="px-4 py-3 text-left sm:px-6">
                                                         <button
                                                                 n:name="submit"
-                                                                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
+                                                                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                                             Filtrovat
                                                         </button>
                                                         <a
                                                                 n:href="resetFilters!"
-                                                                type="button"
                                                                 class="ajax inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                                             Resetovat filtr
                                                         </a>
@@ -88,13 +86,20 @@
                                     </th>
                                 {/foreach}
                                 {if $actions->count() > 0}
-                                    <th scope="col" class="relative px-6 py-3">
+                                    <th scope="col" class="relative px-6 py-3" colspan="{$actions->count()}">
                                         <span class="sr-only">Action</span>
                                     </th>
                                 {/if}
                             </tr>
                             </thead>
                             <tbody>
+                            {if count($items) === 0}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">
+                                        Nebyli nalezeny žádné výsledky
+                                    </td>
+                                </tr>
+                            {else}
                             {foreach $items as $item}
                                 <tr n:class="$iterator->getCounter() % 2 === 0 ? 'bg-white' : 'bg-gray-100'">
                                     {foreach $columns->toArray() as $column}
@@ -106,15 +111,21 @@
                                         }
                                     {/foreach}
 
+                                    <td class="pr-3 whitespace-nowrap text-right text-sm font-medium">
                                     {foreach $actions->toArray() as $action}
+                                        {if $action->getConditionCallback() !== null}
+                                            {continueIf $action->getConditionCallback()($item) === false}
+                                        {/if}
                                         {include
                                             $action->getTemplateFile(),
                                             action: $action,
                                             item: $item
                                         }
                                     {/foreach}
+                                    </td>
                                 </tr>
                             {/foreach}
+                            {/if}
                             </tbody>
                         </table>
                     </div>
@@ -164,13 +175,12 @@
                         <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between">
                             <div class="hidden sm:block">
                                 <p class="text-sm leading-5 text-gray-700">
-                                    Showing
+                                    Výsledky od
                                     <span class="font-medium"> {$pagination->getOffset() + 1} </span>
-                                    to
+                                    do
                                     <span class="font-medium"> {$pagination->getOffset() + $pagination->getLimit()} </span>
-                                    of
+                                    z celkem
                                     <span class="font-medium">{$itemsCount}</span>
-                                    results
                                 </p>
                             </div>
                             <div>

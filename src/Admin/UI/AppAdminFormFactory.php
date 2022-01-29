@@ -50,6 +50,7 @@ class AppAdminFormFactory
 			->addRule(Form::EQUAL, 'Hesla se neshodují', $password);
 
 		$form->addCheckbox('forceNewPassword', 'Vyžadovat změnu hesla');
+		$form->addCheckbox('sysAdmin', 'Systém administrátor');
 
 		$form->onValidate[] = function (Form $form) use ($id): void {
 			$values = $form->getValues(ArrayHash::class);
@@ -88,6 +89,7 @@ class AppAdminFormFactory
 					$values->email,
 					$values->password,
 					$values->forceNewPassword,
+					$values->sysAdmin,
 				);
 			} else {
 				$this->appAdminFacade->createAppAdmin(
@@ -96,6 +98,7 @@ class AppAdminFormFactory
 					$values->email,
 					$values->password,
 					$values->forceNewPassword,
+					$values->sysAdmin,
 				);
 			}
 
@@ -122,6 +125,7 @@ class AppAdminFormFactory
 			'email' => $appAdmin->getEmail(),
 			'name' => $appAdmin->getName(),
 			'forceNewPassword' => $appAdmin->isNewPasswordForced(),
+			'sysAdmin' => $appAdmin->isSysAdmin(),
 		]);
 	}
 

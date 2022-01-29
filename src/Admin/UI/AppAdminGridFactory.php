@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 namespace App\Admin\UI;
 
+use App\Admin\AppAdmin;
 use App\Admin\AppAdminRepository;
 use App\UI\Control\Datagrid\Action\DatagridActionParameter;
 use App\UI\Control\Datagrid\Datagrid;
 use App\UI\Control\Datagrid\DatagridFactory;
 use App\UI\Control\Datagrid\Datasource\DoctrineDataSource;
+use App\UI\Icon\SvgIcon;
 use App\UI\Tailwind\TailwindColorConstant;
 
 class AppAdminGridFactory
@@ -35,6 +37,18 @@ class AppAdminGridFactory
 		$grid->addColumnDatetime('createdAt', 'Vytvořen');
 		$grid->addColumnDatetime('createdAt', 'Poslední aktualizace');
 
+		$grid->addColumnText(
+			'sysAdmin',
+			'Systém administrátor',
+			static function (AppAdmin $appAdmin): string {
+				if ($appAdmin->isSysAdmin()) {
+					return 'Ano';
+				}
+
+				return 'Ne';
+			},
+		);
+
 		$grid->addAction(
 			'edit',
 			'Editovat',
@@ -42,6 +56,8 @@ class AppAdminGridFactory
 			[
 				new DatagridActionParameter('id', 'id'),
 			],
+			SvgIcon::PENCIL,
+			TailwindColorConstant::BLUE,
 		);
 
 		return $grid;

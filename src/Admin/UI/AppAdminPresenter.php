@@ -4,14 +4,14 @@ declare(strict_types = 1);
 
 namespace App\Admin\UI;
 
-use App\UI\Base\BaseAdminPresenter;
+use App\UI\Base\BaseSysadminPresenter;
 use App\UI\Control\Datagrid\Datagrid;
 
-class AppAdminPresenter extends BaseAdminPresenter
+class AppAdminPresenter extends BaseSysadminPresenter
 {
 
 	public function __construct(
-		private AppAdminGridFactory $appAdminGridFactory,
+		private AppAdminGridFactory $productGridFactory,
 	)
 	{
 		parent::__construct();
@@ -24,7 +24,7 @@ class AppAdminPresenter extends BaseAdminPresenter
 
 	protected function createComponentAppAdminGrid(): Datagrid
 	{
-		return $this->appAdminGridFactory->create();
+		return $this->productGridFactory->create();
 	}
 
 }

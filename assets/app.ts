@@ -5,6 +5,8 @@ declare global {
         Alpine: any;
         flashMessage: any;
         datagridFilter: any;
+        photosModal: any;
+        modal: any;
     }
 }
 
@@ -13,7 +15,10 @@ import './scss/index.scss';
 
 //scripts
 import naja from 'naja';
+import {registerExtensions} from "./ts/naja/extension";
+
 naja.initialize();
+registerExtensions(naja);
 
 import './js/LiveFormValidation';
 

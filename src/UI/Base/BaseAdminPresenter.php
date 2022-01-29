@@ -48,4 +48,12 @@ abstract class BaseAdminPresenter extends BasePresenter
 		$this->redirect('this');
 	}
 
+	/**
+	 * @return array<string>
+	 */
+	public function formatLayoutTemplateFiles(): array
+	{
+		return array_merge([__DIR__ . '/templates/@layout.latte'], parent::formatLayoutTemplateFiles());
+	}
+
 }

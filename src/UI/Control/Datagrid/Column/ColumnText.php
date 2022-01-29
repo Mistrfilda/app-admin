@@ -58,12 +58,16 @@ class ColumnText implements IColumn
 		return self::TEMPLATE_FILE;
 	}
 
-	public function processValue(string|int|float|ImmutableDateTime|UuidInterface $value): string
+	public function processValue(string|int|float|ImmutableDateTime|UuidInterface|null $value): string
 	{
 		if ($value instanceof ImmutableDateTime) {
 			throw new DatagridColumnException(
 				sprintf('Datetime object passed to column %s, use addColumnDatetime instead', $this->column),
 			);
+		}
+
+		if ($value === null) {
+			return Datagrid::NULLABLE_PLACEHOLDER;
 		}
 
 		if ($value instanceof UuidInterface) {

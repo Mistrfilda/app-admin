@@ -4,15 +4,15 @@ declare(strict_types = 1);
 
 namespace App\Admin\UI;
 
-use App\UI\Base\BaseAdminPresenter;
+use App\UI\Base\BaseSysadminPresenter;
 use App\UI\Control\Form\AdminForm;
 use App\UI\FlashMessage\FlashMessageType;
 
-class AppAdminEditPresenter extends BaseAdminPresenter
+class AppAdminEditPresenter extends BaseSysadminPresenter
 {
 
 	public function __construct(
-		private AppAdminFormFactory $appAdminFormFactory,
+		private AppAdminFormFactory $productFormFactory,
 	)
 	{
 		parent::__construct();
@@ -37,7 +37,7 @@ class AppAdminEditPresenter extends BaseAdminPresenter
 			$this->redirect('AppAdmin:default');
 		};
 
-		return $this->appAdminFormFactory->create($id, $onSuccess);
+		return $this->productFormFactory->create($id, $onSuccess);
 	}
 
 }

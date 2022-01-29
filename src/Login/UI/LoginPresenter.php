@@ -5,10 +5,10 @@ declare(strict_types = 1);
 namespace App\Login\UI;
 
 use App\Login\UI\Form\LoginFormFactory;
-use App\UI\Base\BasePresenter;
+use App\UI\Base\BaseFrontPresenter;
 use App\UI\Control\Form\AdminForm;
 
-class LoginPresenter extends BasePresenter
+class LoginPresenter extends BaseFrontPresenter
 {
 
 	/** @persistent */
@@ -17,6 +17,12 @@ class LoginPresenter extends BasePresenter
 	public function __construct(private LoginFormFactory $loginFormFactory)
 	{
 		parent::__construct();
+	}
+
+	public function startup(): void
+	{
+		parent::startup();
+		$this->useFullHeight = true;
 	}
 
 	protected function createComponentLoginForm(): AdminForm

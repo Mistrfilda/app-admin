@@ -29,10 +29,8 @@ final class Error4xxPresenter extends Presenter
 		}
 
 		$code = $exception->getCode();
-		if (is_int($code)) {
-			$file = __DIR__ . "/templates/$code.latte";
-			$template->setFile(is_file($file) ? $file : __DIR__ . '/templates/4xx.latte');
-		}
+		$file = __DIR__ . "/templates/$code.latte";
+		$template->setFile(is_file($file) ? $file : __DIR__ . '/templates/4xx.latte');
 		// load template 403.latte or 404.latte or ... 4xx.latte
 	}
 

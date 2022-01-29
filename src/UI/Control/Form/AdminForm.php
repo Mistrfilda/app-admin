@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace App\UI\Control\Form;
 
+use App\UI\Control\Form\Container\AdminFormContainer;
 use App\UI\Control\Form\Input\CustomFileUpload;
+use App\UI\Control\Form\Input\Multiplier;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\SelectBox;
 use Nette\Utils\Json;
@@ -26,6 +28,18 @@ class AdminForm extends Form
 	public function addUpload(string $name, $label = null): CustomFileUpload
 	{
 		return $this[$name] = new CustomFileUpload($label, false);
+	}
+
+	public function addAdminContainer(string $name, string $label): AdminFormContainer
+	{
+		$control = new AdminFormContainer();
+		$control->setLabel($label);
+		$control->currentGroup = $this->currentGroup;
+		if ($this->currentGroup !== null) {
+			$this->currentGroup->add($control);
+		}
+
+		return $this[$name] = $control;
 	}
 
 	public function ajax(): void
@@ -60,6 +74,23 @@ class AdminForm extends Form
 	public function getHeadingText(): string|null
 	{
 		return $this->headingText;
+	}
+
+	public function addDynamic(
+		string $name,
+		string $heading,
+		callable $factory,
+		int $copies = 1,
+		int|null $maxCopies = null,
+	): Multiplier
+	{
+		$control = new Multiplier($factory, $copies, $maxCopies);
+		$control->setCurrentGroup($this->getCurrentGroup());
+		$control->setHeading($heading);
+
+		$this[$name] = $control;
+
+		return $control;
 	}
 
 	public function formatSelectData(SelectBox $selectBox): string

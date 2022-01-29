@@ -35,10 +35,14 @@ class ColumnDatetime extends ColumnText
 		return $this;
 	}
 
-	public function processValue(string|int|float|ImmutableDateTime|UuidInterface $value): string
+	public function processValue(string|int|float|ImmutableDateTime|UuidInterface|null $value): string
 	{
 		if ($value instanceof ImmutableDateTime) {
 			return $value->format($this->datetimeFormat);
+		}
+
+		if ($value === null) {
+			return Datagrid::NULLABLE_PLACEHOLDER;
 		}
 
 		throw new DatagridColumnException('Invalid column type used');

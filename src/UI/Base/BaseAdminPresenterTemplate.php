@@ -20,4 +20,6 @@ abstract class BaseAdminPresenterTemplate extends BasePresenterTemplate
 	/** @var array<MenuItem> */
 	public array $menuItems;
 
+	public BaseAdminPresenter $presenter;
+
 }

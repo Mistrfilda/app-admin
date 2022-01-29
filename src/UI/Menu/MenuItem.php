@@ -18,6 +18,7 @@ class MenuItem
 		private string $label,
 		private array $childrens = [],
 		private array $additionalActivePresenters = [],
+		private bool $onlySysadmin = false,
 	)
 	{
 	}
@@ -58,6 +59,11 @@ class MenuItem
 	public function isNested(): bool
 	{
 		return count($this->childrens) > 0;
+	}
+
+	public function isOnlySysadmin(): bool
+	{
+		return $this->onlySysadmin;
 	}
 
 	/**

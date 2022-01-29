@@ -23,4 +23,8 @@ class TailwindColorConstant
 
 	public const GRAY = 'gray';
 
+	public const EMERALD = 'emerald';
+
+	public const CYAN = 'cyan';
+
 }

@@ -155,6 +155,8 @@ class Datagrid extends Control
 		array $parameters,
 		string|null $icon = null,
 		string $color = TailwindColorConstant::BLUE,
+		bool $isAjax = false,
+		string|null $confirmationString = null,
 	): DatagridAction
 	{
 		$action = new DatagridAction(
@@ -165,6 +167,8 @@ class Datagrid extends Control
 			$parameters,
 			$icon,
 			$color,
+			isAjax: $isAjax,
+			confirmationString: $confirmationString,
 		);
 
 		$this->actions->add($action);
@@ -306,7 +310,7 @@ class Datagrid extends Control
 		$this->limit = 10;
 	}
 
-	private function redrawGridData(): void
+	public function redrawGridData(): void
 	{
 		$this->redrawControl('items');
 		$this->redrawControl('pagination');

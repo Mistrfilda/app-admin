@@ -44,6 +44,7 @@ class AppAdminFacade
 		string $email,
 		string $password,
 		bool $forceNewPassword,
+		bool $sysAdmin,
 	): AppAdmin
 	{
 		$this->logger->info(
@@ -62,6 +63,7 @@ class AppAdminFacade
 			$this->passwords->hash($password),
 			$this->datetimeFactory->createNow(),
 			$forceNewPassword,
+			$sysAdmin,
 		);
 
 		$this->entityManager->persist($appAdmin);
@@ -77,6 +79,7 @@ class AppAdminFacade
 		string $email,
 		string|null $password,
 		bool $forceNewPassword,
+		bool $sysAdmin,
 	): AppAdmin
 	{
 		$this->logger->info(
@@ -84,7 +87,6 @@ class AppAdminFacade
 			[
 				'appAdminId' => $appAdminId->toString(),
 				'name' => $name,
-				'password' => $password,
 			],
 		);
 
@@ -95,6 +97,7 @@ class AppAdminFacade
 			$password !== null ? $this->passwords->hash($password) : null,
 			$this->datetimeFactory->createNow(),
 			$forceNewPassword,
+			$sysAdmin,
 		);
 
 		$this->entityManager->flush();

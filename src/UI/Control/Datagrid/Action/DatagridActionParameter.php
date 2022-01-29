@@ -7,7 +7,11 @@ namespace App\UI\Control\Datagrid\Action;
 class DatagridActionParameter
 {
 
-	public function __construct(private string $parameter, private string $referencedColumn)
+	public function __construct(
+		private string $parameter,
+		private string $referencedColumn,
+		private string|null $rawValue = null,
+	)
 	{
 	}
 
@@ -19,6 +23,11 @@ class DatagridActionParameter
 	public function getReferencedColumn(): string
 	{
 		return $this->referencedColumn;
+	}
+
+	public function getRawValue(): string|null
+	{
+		return $this->rawValue;
 	}
 
 }

@@ -36,6 +36,9 @@ class AppAdmin implements IEntity
 	#[ORM\Column(type: Types::BOOLEAN)]
 	private bool $forceNewPassword;
 
+	#[ORM\Column(type: Types::BOOLEAN)]
+	private bool $sysAdmin;
+
 	public function __construct(
 		string $name,
 		string $username,
@@ -43,6 +46,7 @@ class AppAdmin implements IEntity
 		string $password,
 		ImmutableDateTime $now,
 		bool $forceNewPassword,
+		bool $sysAdmin,
 	)
 	{
 		$this->name = $name;
@@ -52,6 +56,7 @@ class AppAdmin implements IEntity
 		$this->createdAt = $now;
 		$this->updatedAt = $now;
 		$this->forceNewPassword = $forceNewPassword;
+		$this->sysAdmin = $sysAdmin;
 	}
 
 	public function update(
@@ -60,6 +65,7 @@ class AppAdmin implements IEntity
 		string|null $password,
 		ImmutableDateTime $now,
 		bool $forceNewPassword,
+		bool $sysAdmin,
 	): void
 	{
 		$this->name = $name;
@@ -69,6 +75,7 @@ class AppAdmin implements IEntity
 		}
 
 		$this->forceNewPassword = $forceNewPassword;
+		$this->sysAdmin = $sysAdmin;
 		$this->updatedAt = $now;
 	}
 
@@ -107,6 +114,11 @@ class AppAdmin implements IEntity
 	public function isNewPasswordForced(): bool
 	{
 		return $this->forceNewPassword;
+	}
+
+	public function isSysAdmin(): bool
+	{
+		return $this->sysAdmin;
 	}
 
 }

@@ -18,6 +18,7 @@ tracy:
 	maxDepth: 6
 	showLocation: true
 	dumpTheme: dark
+	editor: 'phpstorm://open?file=%file&line=%line'
 
 extensions:
 	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)

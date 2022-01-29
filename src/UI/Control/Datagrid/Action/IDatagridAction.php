@@ -30,4 +30,12 @@ interface IDatagridAction
 
 	public function getTemplateFile(): string;
 
+	public function getConditionCallback(): callable|null;
+
+	public function setConditionCallback(callable|null $conditionCallback): void;
+
+	public function isAjax(): bool;
+
+	public function getConfirmation(): string|null;
+
 }

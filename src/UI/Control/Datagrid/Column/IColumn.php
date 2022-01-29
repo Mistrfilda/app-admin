@@ -21,6 +21,6 @@ interface IColumn
 
 	public function getGetterMethod(): callable|null;
 
-	public function processValue(string|int|float|ImmutableDateTime|UuidInterface $value): string;
+	public function processValue(string|int|float|ImmutableDateTime|UuidInterface|null $value): string;
 
 }

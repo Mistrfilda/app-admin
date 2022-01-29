@@ -132,5 +132,13 @@ Alpine.data('datagridFilter', () => ({
     }
 }));
 
+Alpine.data('modal', () => ({
+    modalOpen: true,
+
+    closeModal() {
+        this.modalOpen = false;
+    }
+}));
+
 window.Alpine = Alpine;
 Alpine.start();

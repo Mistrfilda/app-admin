@@ -14,3 +14,7 @@ input[type="text"]:disabled {
   @apply bg-cyan-500 #{!important};
   background-image: none !important;
 }
+
+.force-hidden {
+  display: none!important;
+}

@@ -53,6 +53,16 @@ abstract class BasePresenter extends Presenter
 		return (int) $id;
 	}
 
+	protected function processParameterBool(string $parameterName = 'id'): bool|null
+	{
+		$id = $this->getParameter($parameterName);
+		if (is_scalar($id) === false) {
+			return null;
+		}
+
+		return (bool) (int) $id;
+	}
+
 	protected function processParameterStringId(string $parameterName = 'id'): string
 	{
 		$id = $this->getParameter($parameterName);
@@ -61,6 +71,16 @@ abstract class BasePresenter extends Presenter
 		}
 
 		return (string) $id;
+	}
+
+	protected function processParameterRequiredUuid(string $parameterName = 'id'): UuidInterface
+	{
+		$id = $this->getParameter($parameterName);
+		if (is_scalar($id) === false || (string) $id === '') {
+			throw new BadRequestException('Missing parameter ID');
+		}
+
+		return Uuid::fromString((string) $id);
 	}
 
 	protected function processParameterUuid(string $parameterName = 'id'): UuidInterface|null
@@ -73,12 +93,9 @@ abstract class BasePresenter extends Presenter
 		return Uuid::fromString((string) $id);
 	}
 
-	/**
-	 * @return array<string>
-	 */
-	public function formatLayoutTemplateFiles(): array
+	protected function createUuidFromString(string $id): UuidInterface
 	{
-		return array_merge([__DIR__ . '/templates/@layout.latte'], parent::formatLayoutTemplateFiles());
+		return Uuid::fromString($id);
 	}
 
 }

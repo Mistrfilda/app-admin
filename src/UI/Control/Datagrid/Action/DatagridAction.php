@@ -14,6 +14,9 @@ class DatagridAction implements IDatagridAction
 
 	private const TEMPLATE_FILE = __DIR__ . '/templates/datagridAction.latte';
 
+	/** @var callable|null */
+	private $conditionCallback;
+
 	/**
 	 * @param array<DatagridActionParameter> $parameters
 	 */
@@ -25,8 +28,12 @@ class DatagridAction implements IDatagridAction
 		private array $parameters,
 		private string|null $icon = null,
 		private string $color = TailwindColorConstant::BLUE,
+		callable|null $conditionCallback = null,
+		private bool $isAjax = false,
+		private string|null $confirmationString = null,
 	)
 	{
+		$this->conditionCallback = $conditionCallback;
 	}
 
 	public function getId(): string
@@ -72,6 +79,36 @@ class DatagridAction implements IDatagridAction
 		return $this->datagrid;
 	}
 
+	public function getConditionCallback(): callable|null
+	{
+		return $this->conditionCallback;
+	}
+
+	public function setConditionCallback(callable|null $conditionCallback): void
+	{
+		$this->conditionCallback = $conditionCallback;
+	}
+
+	public function isAjax(): bool
+	{
+		return $this->isAjax;
+	}
+
+	public function ajax(): void
+	{
+		$this->isAjax = true;
+	}
+
+	public function setConfirmation(string $confirmation): void
+	{
+		$this->confirmationString = $confirmation;
+	}
+
+	public function getConfirmation(): string|null
+	{
+		return $this->confirmationString;
+	}
+
 	/**
 	 * @return array<string, mixed>
 	 */
@@ -79,6 +116,12 @@ class DatagridAction implements IDatagridAction
 	{
 		$formatedParameters = [];
 		foreach ($this->parameters as $parameter) {
+			if ($parameter->getRawValue() !== null) {
+				$formatedParameters[$parameter->getParameter()] = $parameter->getRawValue();
+
+				continue;
+			}
+
 			$value = $this->datagrid->getDatasource()->getValueForKey(
 				$parameter->getReferencedColumn(),
 				$row,
