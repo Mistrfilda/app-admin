@@ -24,6 +24,8 @@ use App\UI\Tailwind\TailwindColorConstant;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mistrfilda\Datetime\DatetimeFactory;
 use Nette\Application\UI\Control;
+use Nette\Http\Session;
+use Nette\Http\SessionSection;
 
 class Datagrid extends Control
 {
@@ -43,6 +45,8 @@ class Datagrid extends Control
 	 */
 	public array $parameterFilters = [];
 
+	private IDataSource $datasource;
+
 	/** @var ArrayCollection<int, IColumn> */
 	private ArrayCollection $columns;
 
@@ -56,13 +60,19 @@ class Datagrid extends Control
 
 	private bool $filterApplied = false;
 
-	public function __construct(private IDataSource $datasource)
+	private Session $session;
+
+	private SessionSection|null $sessionSection;
+
+	public function __construct(IDataSource $datasource, Session $session)
 	{
+		$this->datasource = $datasource;
 		$this->setPagination();
 		$this->paginationService = new PaginationService();
 		$this->columns = new ArrayCollection();
 		$this->filters = new ArrayCollection();
 		$this->actions = new ArrayCollection();
+		$this->session = $session;
 	}
 
 	public function addColumnText(
@@ -223,6 +233,8 @@ class Datagrid extends Control
 
 	public function render(): void
 	{
+		$this->processSession($this->session);
+
 		$template = $this->createTemplate(DatagridTemplate::class);
 
 		if ($this->filterApplied === false && count($this->parameterFilters) > 0) {
@@ -307,13 +319,21 @@ class Datagrid extends Control
 	private function setPagination(): void
 	{
 		$this->offset = 0;
-		$this->limit = 10;
+		$this->limit = 2;
 	}
 
 	public function redrawGridData(): void
 	{
 		$this->redrawControl('items');
 		$this->redrawControl('pagination');
+	}
+
+	private function processSession(Session $session): void
+	{
+		bdump($session);
+		bdump($this->limit);
+		bdump($this->offset);
+		bdump($this->getUniqueId());
 	}
 
 }
