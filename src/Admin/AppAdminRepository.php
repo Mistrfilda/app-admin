@@ -68,6 +68,16 @@ class AppAdminRepository extends BaseRepository
 		}
 	}
 
+	public function getCount(): int
+	{
+		$qb = $this->doctrineRepository->createQueryBuilder('appAdmin');
+		$qb->select('count(appAdmin.id)');
+		$result = $qb->getQuery()->getSingleScalarResult();
+		assert(is_scalar($result));
+
+		return (int) $result;
+	}
+
 	public function createQueryBuilder(): QueryBuilder
 	{
 		return $this->doctrineRepository->createQueryBuilder('appAdmin');

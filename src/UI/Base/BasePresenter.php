@@ -7,6 +7,7 @@ namespace App\UI\Base;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\InvalidLinkException;
 use Nette\Application\UI\Presenter;
+use Nette\Bridges\SecurityHttp\SessionStorage;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
@@ -96,6 +97,15 @@ abstract class BasePresenter extends Presenter
 	protected function createUuidFromString(string $id): UuidInterface
 	{
 		return Uuid::fromString($id);
+	}
+
+	public function checkRequirements(mixed $element): void
+	{
+		$storage = $this->getUser()->getStorage();
+		assert($storage instanceof SessionStorage);
+
+		$storage->setNamespace($this->basePresenterParameters->getStorageName());
+		parent::checkRequirements($element);
 	}
 
 }

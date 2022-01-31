@@ -1,5 +1,7 @@
 parameters:
-	pageTitle: 'App-starter'
+	basePresenterParameters:
+		pageTitle: 'App-starter'
+		storageName: 'appstarterstorage'
 
 includes:
 	- forms.neon
@@ -125,7 +127,7 @@ services:
 	svgMacro: App\UI\Icon\SvgMacro(%appDir%/../assets/svg)
 
 	#BASE PRESENTER PARAMETERS
-	- App\UI\Base\BasePresenterParameters(pageTitle: %pageTitle%)
+	- App\UI\Base\BasePresenterParameters(pageTitle: %basePresenterParameters.pageTitle%, storageName: %basePresenterParameters.storageName%)
 
 	#FORM
 	- App\UI\Control\Form\AdminFormFactory
