@@ -55,7 +55,7 @@ class DoctrineDataSource implements IDataSource
 
 		$result = $countQb->getQuery()->getSingleScalarResult();
 
-		assert(is_string($result));
+		assert(is_string($result) || is_int($result));
 
 		return (int) $result;
 	}
