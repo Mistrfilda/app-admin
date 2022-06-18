@@ -86,6 +86,7 @@ BASED ON https://github.com/orisai/coding-standard-php
         <properties>
             <property name="groups" type="array">
                 <element value="uses"/>
+                <element value="enum cases"/>
                 <element value="constants"/>
                 <element value="properties"/>
                 <element value="constructor"/>
@@ -674,7 +675,7 @@ BASED ON https://github.com/orisai/coding-standard-php
     <rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
     <rule ref="SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition"/>
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHintSpacing"/>
+<!--    <rule ref="SlevomatCodingStandard.Classes.PropertyDeclaration"/>-->
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing">
         <properties>
             <property name="spacesCountBeforeColon" value="0"/>

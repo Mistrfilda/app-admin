@@ -35,6 +35,7 @@ extensions:
 
 	webpackassets: App\UI\Extension\Webpack\DI\WebpackAssetExtension
 	custompresenterfactory: App\UI\Extension\PresenterFactory\DI\CustomPresenterFactoryExtension
+	latteMacros: App\UI\Extension\Latte\LatteMacrosExtension
 
 dbal:
 	debug:
@@ -93,6 +94,9 @@ webpackassets:
 	assetsDirs:
 		- %wwwDir%/build/admin
 
+latteMacros:
+	svgDir: %appDir%/../assets/svg
+
 custompresenterfactory:
 	presenterDir: %appDir%
 	customMapping:
@@ -101,10 +105,6 @@ custompresenterfactory:
 		Admin:AppAdminChangePassword: App\Admin\UI\AppAdminChangePasswordPresenter
 		Admin:AppAdminEdit: App\Admin\UI\AppAdminEditPresenter
 		Admin:Dashboard: App\Dashboard\UI\DashboardPresenter
-
-latte:
-    macros:
-        - @svgMacro
 
 services:
 	- App\Router\RouterFactory::createRouter
@@ -122,9 +122,6 @@ services:
 	secondsFormatFilter: App\UI\Filter\SecondsFormatFilter
 	nullableStringFilter: App\UI\Filter\NullableStringFilter
 	flashMessageColorFilter: App\UI\Filter\FlashMessageColorFilter
-
-	#CUSTOM LATTE MACROS
-	svgMacro: App\UI\Icon\SvgMacro(%appDir%/../assets/svg)
 
 	#BASE PRESENTER PARAMETERS
 	- App\UI\Base\BasePresenterParameters(pageTitle: %basePresenterParameters.pageTitle%, storageName: %basePresenterParameters.storageName%)

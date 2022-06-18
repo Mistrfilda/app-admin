@@ -7,7 +7,7 @@
                     <dt>
                         <div class="absolute bg-{$dashboardValue->getColor()}-500 rounded-md p-3">
                             {if $dashboardValue->getSvgIcon() !== null}
-                                {renderSvg "{$dashboardValue->getSvgIcon()}", ['class' => 'h-6 w-6 text-white']}
+                                {renderSvg $dashboardValue->getSvgIcon(), ['class' => 'h-6 w-6 text-white']}
                             {/if}
                         </div>
                         <p class="ml-16 text-sm font-medium text-gray-500 truncate">
