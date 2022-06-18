@@ -91,7 +91,7 @@
                                    class="bg-blue-800 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md"
                                 >
                                     {if $menuItem->getIcon() !== null}
-                                        {renderSvg "{$menuItem->getIcon()}", ['class' => 'mr-4 flex-shrink-0 h-6 w-6 text-blue-200']}
+                                        {renderSvg $menuItem->getIcon(), ['class' => 'mr-4 flex-shrink-0 h-6 w-6 text-blue-200']}
                                     {/if}
                                     {$menuItem->getLabel()}
                                 </a>
@@ -100,7 +100,7 @@
                                    class="text-blue-100 hover:text-white hover:bg-blue-600 group flex items-center px-2 py-2 text-base font-medium rounded-md"
                                 >
                                     {if $menuItem->getIcon() !== null}
-                                        {renderSvg "{$menuItem->getIcon()}", ['class' => 'mr-4 flex-shrink-0 h-6 w-6 text-blue-200']}
+                                        {renderSvg $menuItem->getIcon(), ['class' => 'mr-4 flex-shrink-0 h-6 w-6 text-blue-200']}
                                     {/if}
                                     {$menuItem->getLabel()}
                                 </a>
@@ -131,7 +131,7 @@
                                         class="bg-blue-800 text-white group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md"
                                 >
                                     {if $menuItem->getIcon() !== null}
-                                        {renderSvg "{$menuItem->getIcon()}", ['class' => 'mr-4 flex-shrink-0 h-6 w-6 text-blue-200']}
+                                        {renderSvg $menuItem->getIcon(), ['class' => 'mr-4 flex-shrink-0 h-6 w-6 text-blue-200']}
                                     {/if}
                                     {$menuItem->getLabel()}
                                 </a>
@@ -140,7 +140,7 @@
                                         class="text-blue-100 hover:text-white hover:bg-blue-600 group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md"
                                 >
                                     {if $menuItem->getIcon() !== null}
-                                        {renderSvg "{$menuItem->getIcon()}", ['class' => 'mr-4 flex-shrink-0 h-6 w-6 text-blue-200']}
+                                        {renderSvg $menuItem->getIcon(), ['class' => 'mr-4 flex-shrink-0 h-6 w-6 text-blue-200']}
                                     {/if}
                                     {$menuItem->getLabel()}
                                 </a>

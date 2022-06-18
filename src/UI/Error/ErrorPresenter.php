@@ -6,8 +6,8 @@ namespace App\UI\Error;
 
 use Nette\Application\BadRequestException;
 use Nette\Application\Helpers;
-use Nette\Application\IResponse;
 use Nette\Application\Request;
+use Nette\Application\Response;
 use Nette\Application\Responses;
 use Nette\Application\UI\Presenter;
 use Nette\Http;
@@ -25,7 +25,7 @@ final class ErrorPresenter extends Presenter
 		parent::__construct();
 	}
 
-	public function run(Request $request): IResponse
+	public function run(Request $request): Response
 	{
 		$exception = $request->getParameter('exception');
 
