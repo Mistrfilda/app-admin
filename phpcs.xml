@@ -16,7 +16,7 @@ BASED ON https://github.com/orisai/coding-standard-php
         <properties>
             <property name="rootNamespaces" type="array">
                 <element key="src" value="App"/>
-                <element key="tests" value="Tests\App\Test"/>
+                <element key="tests" value="App\Test"/>
             </property>
         </properties>
     </rule>
