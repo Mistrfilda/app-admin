@@ -6,7 +6,7 @@ parameters:
 
 	doctrine:
 		repositoryClass: App\Doctrine\BaseRepository
-		objectManagerLoader: tests/DoctrineObjectManager.php
+		objectManagerLoader: tools/DoctrineObjectManager.php
 
 	ignoreErrors:
 		- '#Call to an undefined method Nette\\ComponentModel\\IComponent\:\:addError\(\)#'
