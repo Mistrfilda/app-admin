@@ -1,20 +1,25 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-	purge: {
-		content: [
-			'./src/**/*.html',
-			'./src/**/*.latte',
-			'./assets/**/*.html',
-			'./assets/**/*.latte',
-			'./assets/**/*.ts',
-			'./assets/**/*.js'
-		],
-		options: {
-			// Whitelisting some classes to avoid purge
-			safelist: [/^bg-/, /^text-/, /^border-/, /^hover-/, /^ring-/]
+	content: [
+		'./src/**/*.html',
+		'./src/**/*.latte',
+		'./assets/**/*.html',
+		'./assets/**/*.latte',
+		'./assets/**/*.ts',
+		'./assets/**/*.js'
+	],
+	safelist: [
+		{
+			pattern: /bg-/
+		},
+		{
+			pattern: /border-/
+		},
+		{
+			pattern: /ring-/
 		}
-	},
+	],
 	theme: {
 		extend: {
 			colors: {
