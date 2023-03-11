@@ -81,6 +81,13 @@
 			"@stan",
 			"@cs",
 			"@test-unit"
+		],
+		"migm": "bin/console migrations:migrate --no-interaction",
+		"yarn-prod": "yarn build-prod",
+		"deploy-all": [
+			"@migm",
+			"@clear",
+			"@yarn-prod"
 		]
 	},
 	"config": {
