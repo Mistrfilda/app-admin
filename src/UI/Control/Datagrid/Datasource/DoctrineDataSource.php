@@ -4,10 +4,11 @@ declare(strict_types = 1);
 
 namespace App\UI\Control\Datagrid\Datasource;
 
-use App\Doctrine\IEntity;
+use App\Doctrine\Entity;
 use App\UI\Control\Datagrid\Column\IColumn;
 use App\UI\Control\Datagrid\Filter\FilterText;
 use App\UI\Control\Datagrid\Filter\IFilter;
+use App\UI\Control\Datagrid\Sort\Sort;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 use Nette\Utils\Strings;
@@ -22,17 +23,19 @@ class DoctrineDataSource implements IDataSource
 
 	/**
 	 * @param ArrayCollection<string, IFilter> $filters
-	 * @return array<string|int, IEntity>
+	 * @param ArrayCollection<string, Sort> $sorts
+	 * @return array<string|int, Entity>
 	 */
-	public function getData(int $offset, int $limit, ArrayCollection $filters): array
+	public function getData(int $offset, int $limit, ArrayCollection $filters, ArrayCollection $sorts): array
 	{
 		$this->qb
 			->setFirstResult($offset)
 			->setMaxResults($limit);
 
 		$this->addFilterToQuery($filters, $this->qb);
+		$this->addSortToQuery($sorts, $this->qb);
 
-		/** @var array<string|int, IEntity> $results */
+		/** @var array<string|int, Entity> $results */
 		$results = $this->qb
 			->getQuery()
 			->getResult();
@@ -60,10 +63,10 @@ class DoctrineDataSource implements IDataSource
 		return (int) $result;
 	}
 
-	public function getValueForColumn(IColumn $column, IEntity $row): string
+	public function getValueForColumn(IColumn $column, Entity $row): string
 	{
 		if ($column->getGetterMethod() !== null) {
-			return $column->getGetterMethod()($row);
+			return $column->processValue($column->getGetterMethod()($row));
 		}
 
 		$getterMethod = 'get' . Strings::firstUpper($column->getColumn());
@@ -81,7 +84,7 @@ class DoctrineDataSource implements IDataSource
 		return $column->processValue($row->{$getterMethod}());
 	}
 
-	public function getValueForKey(string $key, IEntity $row): string|int|float|UuidInterface
+	public function getValueForKey(string $key, Entity $row): string|int|float|UuidInterface
 	{
 		$getterMethod = 'get' . Strings::firstUpper($key);
 		if (method_exists($row, $getterMethod) === false) {
@@ -123,8 +126,13 @@ class DoctrineDataSource implements IDataSource
 			if ($filter instanceof FilterText) {
 				$key = ':param_' . $index;
 				$value = $filter->getValue();
+
+				$x = $filter->getColumn()->getReferencedColumn() !== null
+					? $filter->getColumn()->getReferencedColumn()
+					: $rootAlias . '.' . $filter->getColumn()->getColumn();
+
 				$qb->andWhere($qb->expr()->like(
-					$rootAlias . '.' . $filter->getColumn()->getColumn(),
+					$x,
 					$key,
 				));
 
@@ -132,6 +140,28 @@ class DoctrineDataSource implements IDataSource
 			}
 
 			$index++;
+		}
+	}
+
+	/**
+	 * @param ArrayCollection<string, Sort> $sorts
+	 */
+	private function addSortToQuery(ArrayCollection $sorts, QueryBuilder $qb): void
+	{
+		$rootAlias = $this->getRootAlias();
+		foreach ($sorts as $sort) {
+			if ($sort->getCurrentDirection() === null) {
+				continue;
+			}
+
+			$x = $sort->getColumn()->getReferencedColumn() !== null
+				? $sort->getColumn()->getReferencedColumn()
+				: $rootAlias . '.' . $sort->getColumn()->getColumn();
+
+			$qb->addOrderBy(
+				$x,
+				$sort->getCurrentDirection()->value,
+			);
 		}
 	}
 

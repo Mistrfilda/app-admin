@@ -4,12 +4,13 @@ declare(strict_types = 1);
 
 namespace App\UI\Control\Datagrid;
 
-use App\Doctrine\IEntity;
+use App\Doctrine\Entity;
 use App\UI\Control\Datagrid\Action\IDatagridAction;
 use App\UI\Control\Datagrid\Column\IColumn;
 use App\UI\Control\Datagrid\Datasource\IDataSource;
 use App\UI\Control\Datagrid\Filter\IFilter;
 use App\UI\Control\Datagrid\Pagination\Pagination;
+use App\UI\Control\Datagrid\Row\RowRenderer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
@@ -27,7 +28,7 @@ class DatagridTemplate extends Template
 	/** @var ArrayCollection<int, IFilter> */
 	public ArrayCollection $filters;
 
-	/** @var array<int|string, IEntity> */
+	/** @var array<int|string, Entity> */
 	public array $items;
 
 	/** @var ArrayCollection<int, IDatagridAction> */
@@ -38,5 +39,7 @@ class DatagridTemplate extends Template
 	public Pagination $pagination;
 
 	public int $itemsCount;
+
+	public RowRenderer|null $rowRenderer;
 
 }

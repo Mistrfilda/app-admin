@@ -23,9 +23,10 @@ class ColumnDatetime extends ColumnText
 		string $label,
 		string $column,
 		callable|null $getterMethod = null,
+		string|null $referencedColumn = null,
 	)
 	{
-		parent::__construct($datagrid, $label, $column, $getterMethod);
+		parent::__construct($datagrid, $label, $column, $getterMethod, $referencedColumn);
 	}
 
 	public function setFormat(string $datetimeFormat): self
@@ -35,7 +36,9 @@ class ColumnDatetime extends ColumnText
 		return $this;
 	}
 
-	public function processValue(string|int|float|ImmutableDateTime|UuidInterface|null $value): string
+	public function processValue(
+		string|int|float|ImmutableDateTime|UuidInterface|DatagridRenderableEnum|null $value,
+	): string
 	{
 		if ($value instanceof ImmutableDateTime) {
 			return $value->format($this->datetimeFormat);

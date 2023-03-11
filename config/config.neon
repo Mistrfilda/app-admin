@@ -150,4 +150,7 @@ services:
 	- App\Login\UI\Form\LoginFormFactory
 
 	#Dashboard
-	- App\Dashboard\DashboardValueBuilder
+	- App\Dashboard\DashboardValueBuilderFacade
+	- App\Dashboard\UI\DashboardValueControl\DashboardValueControlFactory
+
+	- App\UI\Menu\MenuBuilder

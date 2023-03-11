@@ -4,21 +4,22 @@ declare(strict_types = 1);
 
 namespace App\UI\Menu;
 
+use App\UI\Icon\SvgIcon;
+
 class MenuItem
 {
 
 	/**
-	 * @param array<MenuItem> $childrens
 	 * @param array<string> $additionalActivePresenters
 	 */
 	public function __construct(
 		private string $presenter,
 		private string $action,
-		private string|null $icon,
+		private SvgIcon|null $icon,
 		private string $label,
-		private array $childrens = [],
 		private array $additionalActivePresenters = [],
 		private bool $onlySysadmin = false,
+		private string|null $badge = null,
 	)
 	{
 	}
@@ -40,25 +41,12 @@ class MenuItem
 
 	public function getIcon(): string|null
 	{
-		return $this->icon;
+		return $this->icon?->value;
 	}
 
 	public function getLabel(): string
 	{
 		return $this->label;
-	}
-
-	/**
-	 * @return array<MenuItem>
-	 */
-	public function getChildrens(): array
-	{
-		return $this->childrens;
-	}
-
-	public function isNested(): bool
-	{
-		return count($this->childrens) > 0;
 	}
 
 	public function isOnlySysadmin(): bool
@@ -76,26 +64,16 @@ class MenuItem
 			$this->additionalActivePresenters,
 		);
 
-		return $this->getChildrenLinks($condition);
-	}
-
-	/**
-	 * @param array<string> $condition
-	 * @return array<string>
-	 */
-	private function getChildrenLinks(array &$condition): array
-	{
 		if ($this->presenter !== '') {
 			$condition[] = $this->presenter . ':*';
 		}
 
-		if (count($this->childrens) > 0) {
-			foreach ($this->childrens as $children) {
-				$children->getChildrenLinks($condition);
-			}
-		}
-
 		return $condition;
+	}
+
+	public function getBadge(): string|null
+	{
+		return $this->badge;
 	}
 
 }

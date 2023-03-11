@@ -4,47 +4,67 @@ declare(strict_types = 1);
 
 namespace App\UI\Icon;
 
-class SvgIcon
+enum SvgIcon: string
 {
 
-	public const ADJUSTMENTS = 'adjustments.svg';
+	case ADJUSTMENTS = 'adjustments.svg';
 
-	public const ARROW_DOWN = 'arrow-down.svg';
+	case ARROW_DOWN = 'arrow-down.svg';
 
-	public const ARROW_UP = 'arrow-up.svg';
+	case ARROW_UP = 'arrow-up.svg';
 
-	public const BIN = 'bin.svg';
+	case BIN = 'bin.svg';
 
-	public const CHECK_CIRCLE = 'check-circle.svg';
+	case CHECK_CIRCLE = 'check-circle.svg';
 
-	public const CHEVRON_DOWN = 'chevron-down.svg';
+	case CHEVRON_DOWN = 'chevron-down.svg';
 
-	public const CLIPBOARD_LIST = 'clipboard-list.svg';
+	case CHEVRON_UP = 'chevron-up.svg';
 
-	public const GIFT = 'gift.svg';
+	case CLIPBOARD_LIST = 'clipboard-list.svg';
 
-	public const CLOUD = 'cloud.svg';
+	case GIFT = 'gift.svg';
 
-	public const EXCLAMATION = 'exclamation.svg';
+	case CLOUD = 'cloud.svg';
 
-	public const EYE = 'eye.svg';
+	case EXCLAMATION = 'exclamation.svg';
 
-	public const HOME = 'home.svg';
+	case EYE = 'eye.svg';
 
-	public const INFORMATION_CIRCLE = 'information-circle.svg';
+	case HOME = 'home.svg';
 
-	public const PENCIL = 'pencil.svg';
+	case INFORMATION_CIRCLE = 'information-circle.svg';
 
-	public const SCISSORS = 'scissors.svg';
+	case PENCIL = 'pencil.svg';
 
-	public const SPINNER = 'spinner.svg';
+	case SCISSORS = 'scissors.svg';
 
-	public const USER = 'user.svg';
+	case SPINNER = 'spinner.svg';
 
-	public const USERS = 'users.svg';
+	case USER = 'user.svg';
 
-	public const X = 'x.svg';
+	case USERS = 'users.svg';
 
-	public const X_CIRCLE = 'x-circle.svg';
+	case X = 'x.svg';
+
+	case X_CIRCLE = 'x-circle.svg';
+
+	case DOLLAR = 'dollar.svg';
+
+	case EURO = 'euro.svg';
+
+	case CZECH_CROWN = 'czech-crown.svg';
+
+	case COLLECTION = 'collection.svg';
+
+	case SWITCH_VERTICAL = 'switch-vertical.svg';
+
+	case DOCUMENT_DUPLICATE = 'document-duplicate.svg';
+
+	case PORTU = 'portu.svg';
+
+	case TABLE_CELLS = 'table-cells.svg';
+
+	case ARROW_TRENDING_UP = 'arrow-trending-up.svg';
 
 }
